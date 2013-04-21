@@ -6,3 +6,6 @@ Diese wird erstellt mit
 mkvirtualenv --no-site-packages -p /usr/bin/python2.7 fraktionstool
 
 Die settings.py.example - Datei in settings.py umbenennen und anpassen
+
+Zum Starten der virtualenv - Umgebung:
+workon fraktionstool
