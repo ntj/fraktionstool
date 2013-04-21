@@ -1,0 +1,6 @@
+Entwicklungsumgebung
+
+Benötigt wird eine virtualenv-Umgebung
+
+Diese wird erstellt mit
+mkvirtualenv --no-site-packages -p /usr/bin/python2.7 fraktionstool
