@@ -42,9 +42,18 @@ class Vorhaben(models.Model):
 	name = models.CharField(max_length=255)
 	nummer = models.CharField(max_length=255)
 	typ = models.ForeignKey(VorhabenTyp)
+	gremien = models.ManyToManyField(Gremium, through='GremiumVorhaben')
 
 	def __unicode__(self):
 		return self.name
+
+class GremiumVorhaben(models.Model):
+	class Meta:
+		verbose_name = "Gremien-Vorhaben-Verknüpfung"
+		verbose_name_plural = "Gremien-Vorhaben-Verknüpfungen"
+
+	gremium = models.ForeignKey(Gremium)
+	vorhaben = models.ForeignKey(Vorhaben)
 
 class Nachricht(models.Model):
 	class Meta:
