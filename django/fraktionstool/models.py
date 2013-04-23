@@ -20,9 +20,18 @@ class Gremium(models.Model):
 
 	name = models.CharField(max_length=255)
 	typ = models.ForeignKey(GremiumTyp)
+	member = models.ManyToManyField(User, through='GremiumUser')
 
 	def __unicode__(self):
 		return self.name
+
+class GremiumUser(models.Model):
+	class Meta:
+		verbose_name = "Gremium-User-Verknüpfung"
+		verbose_name_plural = "Gremium-User-Verknüpfungen"
+
+	gremium = models.ForeignKey(Gremium)
+	user = models.ForeignKey(User)
 
 class VorhabenTyp(models.Model):
 	class Meta:
