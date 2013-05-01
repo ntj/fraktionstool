@@ -43,4 +43,9 @@ STATIC_ROOT = ''
 STATIC_URL = '/static/'
 
 # Make this unique, and don't share it with anybody.
+# (You can generate a key with:
+# >>> from random import choice
+# >>> ''.join([choice('abcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*(-_=+)') for i in range(50)])
+# '@er^vm3$w#9n$)z3avny*hh+l^#ezv+sx*(72qwp0c%%cg1$i+'
+# ... which is how "django-admin startproject" does it.)
 SECRET_KEY = ''
