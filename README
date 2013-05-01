@@ -16,3 +16,16 @@ Anschließend muss die Umgebung aktiviert werden:
 Außerdem muss eine Konfigurationsdatei angelegt werden: Im Verzeichnis
 `django/mysite` muss die Datei `settings.py.example` in `settings.py`
 umebenannt werden.
+
+Natürlich wird auch ein Datenbanknutzer und eine Datenbank benötigt.
+Exemplarisch soll dies hier für ein PostgreSQL-DBMS welches als
+Benutzer `postgres` ausgeführt wird, gezeigt werden:
+
+  $ sudo -u postgres psql
+  $ CREATE ROLE "fraktionstool_user" LOGIN PASSWORD 'fraktionstool_pas';
+  $ CREATE DATABASE "fraktionstool" OWNER "fraktionstool_user";
+  $ \q
+
+Dies erzeugt den Datenbanknutzer `fraktionstool_user` mit dem Passwort
+`fraktionstool_pass` und setzt diesen als Besitzer der neuen Datenbank
+`fraktionstool`.
