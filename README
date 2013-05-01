@@ -1,11 +1,18 @@
+Fraktionstool
+=============
+
 Entwicklungsumgebung
+--------------------
 
-Benötigt wird eine virtualenv-Umgebung
+Es wird empfohlen eine virtualenv-Umgebung zu benutzen. Diese wird
+erstellt mit:
 
-Diese wird erstellt mit
-mkvirtualenv --no-site-packages -p /usr/bin/python2.7 fraktionstool
+  mkvirtualenv --no-site-packages -p /usr/bin/python2.7 fraktionstool
 
-Die settings.py.example - Datei in settings.py umbenennen und anpassen
+Anschließend muss die Umgebung aktiviert werden:
 
-Zum Starten der virtualenv - Umgebung:
-workon fraktionstool
+  workon fraktionstool
+
+Außerdem muss eine Konfigurationsdatei angelegt werden: Im Verzeichnis
+`django/mysite` muss die Datei `settings.py.example` in `settings.py`
+umebenannt werden.
