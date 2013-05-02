@@ -1,4 +1,22 @@
+body {
+    font-family: helvetica;
+}
+
 h1
 {
 	color: #ee0000;
+}
+
+div#loginbox {
+    width: 300px;
+    margin-left: auto;
+    margin-right: auto;
+    border: 1px dotted #ee0000;
+    background-color: #ffeedd;
+    padding: 10px;
+    overflow: auto;
+}
+
+div#loginbox input {
+    float: right;
 }

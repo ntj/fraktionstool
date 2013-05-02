@@ -5,14 +5,18 @@
 {% block toggle_login %}{% endblock %}
 
 {% block heading %}
-<h2>Login</h2>
+    <h2>Login</h2>
 {% endblock %}
 
 {% block content %}
-<form action="{% url "mysite_login" %}" method="post" accept-charset="utf-8">
-    {{ form.as_p }}
-    {% csrf_token %}
-    <input type="hidden" name="next" value="{{ next }}" />
-    <input class="btn" type="submit" value="Login" />
-</form>
+<div id="loginbox">
+    <form action="{% url "mysite_login" %}" method="post" accept-charset="utf-8">
+        {{ form.as_p }}
+        {% csrf_token %}
+        <input type="hidden" name="next" value="{{ next }}" />
+        <div class="centered">
+            <input class="btn" type="submit" value="Login" />
+        </div>
+    </form>
+</div>
 {% endblock %}
