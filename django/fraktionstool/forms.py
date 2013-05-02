@@ -5,4 +5,5 @@ class GremiumSelectionForm(forms.Form):
 	gremium = forms.ModelChoiceField(
 		queryset=Gremium.objects.all())
 	my_gremien = forms.BooleanField(
-		label='Nur meine Gremien')
+		label='Nur meine Gremien',
+		required=False)
