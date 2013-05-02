@@ -15,8 +15,30 @@ div#loginbox {
     background-color: #ffeedd;
     padding: 10px;
     overflow: auto;
+    margin-top: 3em;
 }
 
 div#loginbox input {
     float: right;
+}
+
+div#header {
+    background-color: #ffeedd;
+    border-bottom: 1px dotted #ee0000;
+    height: 1.5em;
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    padding: 3px;
+}
+
+.raggedright {
+    float: right;
+}
+
+div#content {
+    postion: relative;
+    overflow: auto;
+    padding: 3px;
 }
