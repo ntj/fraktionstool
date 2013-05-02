@@ -1,4 +1,4 @@
-import settings_base
+from settings_base import *
 
 # Django settings for mysite project.
 
