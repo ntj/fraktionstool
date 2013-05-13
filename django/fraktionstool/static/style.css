@@ -29,6 +29,8 @@ div#loginbox input {
 }
 
 div#header {
+    color: #073642;
+    font-size: small;
     border-bottom: 1px dotted #CB4B16;
     background-color: #FDF6E3;
     height: 1.5em;
@@ -36,7 +38,17 @@ div#header {
     left: 0;
     top: 0;
     right: 0;
-    padding: 3px;
+    padding: 3px 10px 3px 10px;
+}
+
+div#header a:link {
+    color: #073642;
+    text-decoration: none;
+}
+
+div#header a:visited {
+    color: #073642;
+    text-decoration: none;
 }
 
 .raggedright {
