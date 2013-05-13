@@ -11,11 +11,17 @@ div#loginbox {
     width: 300px;
     margin-left: auto;
     margin-right: auto;
-    border: 1px dotted #ee0000;
-    background-color: #ffeedd;
+    border: 1px dotted #CB4B16;
+    background-color: #FDF6E3;
     padding: 10px;
     overflow: auto;
     margin-top: 3em;
+}
+
+div#loginbox ul.errorlist {
+    font-size: small;
+    color: #CB4B16;
+    list-style-type: square;
 }
 
 div#loginbox input {
@@ -23,8 +29,8 @@ div#loginbox input {
 }
 
 div#header {
-    background-color: #ffeedd;
-    border-bottom: 1px dotted #ee0000;
+    border-bottom: 1px dotted #CB4B16;
+    background-color: #FDF6E3;
     height: 1.5em;
     position: absolute;
     left: 0;
