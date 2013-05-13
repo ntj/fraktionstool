@@ -1,0 +1,39 @@
+- fields: {name: Ausschuss}
+  model: fraktionstool.gremiumtyp
+  pk: 2
+- fields: {name: Bauausschuss, typ: 2}
+  model: fraktionstool.gremium
+  pk: 1
+- fields: {name: Jugendhifeausschuss, typ: 2}
+  model: fraktionstool.gremium
+  pk: 2
+- fields: {gremium: 1, user: 2}
+  model: fraktionstool.gremiumuser
+  pk: 1
+- fields: {gremium: 2, user: 2}
+  model: fraktionstool.gremiumuser
+  pk: 2
+- fields: {gremium: 2, user: 1}
+  model: fraktionstool.gremiumuser
+  pk: 3
+- fields: {name: Antrag}
+  model: fraktionstool.vorhabentyp
+  pk: 1
+- fields: {name: Vorlage}
+  model: fraktionstool.vorhabentyp
+  pk: 2
+- fields: {name: erster Antrag, nummer: A-0001, typ: 1}
+  model: fraktionstool.vorhaben
+  pk: 1
+- fields: {name: erstes Vorlage, nummer: V-0001, typ: 2}
+  model: fraktionstool.vorhaben
+  pk: 2
+- fields: {gremium: 1, vorhaben: 1}
+  model: fraktionstool.gremiumvorhaben
+  pk: 1
+- fields: {gremium: 2, vorhaben: 1}
+  model: fraktionstool.gremiumvorhaben
+  pk: 2
+- fields: {gremium: 2, vorhaben: 2}
+  model: fraktionstool.gremiumvorhaben
+  pk: 3
