@@ -1,5 +1,31 @@
 {% extends "base.html" %}
 
+{% block extra_head_content  %}
+<script type="text/javascript" src="{{ STATIC_URL }}js/jquery.js"></script>
+<script type="text/javascript">
+    // prepare the form when the DOM is ready
+    $(document).ready(function() {
+        $("#id_my_gremien").change(function() {
+            var onlyown = $(this).is(':checked') ? 1 : 0;
+            $.getJSON("{% url 'list_gremien' %}", { onlyown: onlyown },
+                function(gremien) {
+                    // Get DOM object for select box
+                    var select = document.getElementById('id_gremium');
+                    // Clear the old options
+                    select.length = 0;
+                    // Add new options
+                    for (g in gremien) {
+                        if (gremien.hasOwnProperty(g)) {
+                            select.options[select.options.length] =
+                                new Option(gremien[g], g);
+                        }
+                    }
+                });
+        });
+    });
+</script>
+{% endblock %}
+
 {% block content %}
 <h1>Hallo und willkommen im Fraktionstool</h1>
 <form action="" method="post">
