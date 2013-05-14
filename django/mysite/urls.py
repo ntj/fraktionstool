@@ -2,6 +2,7 @@ from django.conf.urls import patterns, include, url
 from django.contrib.auth.decorators import login_required
 
 from fraktionstool.views import VorhabenView
+from fraktionstool.views import list_gremien
 
 from django.contrib import admin
 admin.autodiscover()
@@ -23,3 +24,9 @@ urlpatterns += patterns('django.contrib.auth.views',
         name='mysite_login'),
     url(r'^logout/$', 'logout', {'next_page': '/'}, name='mysite_logout'),
 )
+
+# Model retrieval
+urlpatterns += patterns('',
+    url(r'^gremium/list$', list_gremien, name='list_gremien'),
+)
+
