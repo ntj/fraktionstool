@@ -3,3 +3,4 @@ South==0.7.6
 psycopg2==2.5
 wsgiref==0.1.2
 pyyaml==3.10
+django-jquery==1.9.1
