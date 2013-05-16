@@ -33,4 +33,35 @@
     {{form.as_p}}
     <input type="submit" value="Aktualisieren" />
 </form>
+
+<p>
+{% if vorhaben %}
+    Vorhaben:
+    <table>
+        {% for v in vorhaben %}
+            <tr>
+                <td>{{ v }}</td>
+            </tr>
+        {% endfor %}
+    </table>
+{% else %}
+    <em>Es wurden keine Vorhaben gefunden.</em>
+{% endif %}
+</p>
+
+<div class="pagination">
+    <span class="step-links">
+        {% if page_obj.has_previous %}
+            <a href="?page={{ page_obj.previous_page_number }}">zurück</a>
+        {% endif %}
+
+        <span class="current">
+            Seite {{ page_obj.number }} von {{ paginator.num_pages }}.
+        </span>
+
+        {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}">vor</a>
+        {% endif %}
+    </span>
+</div>
 {% endblock %}
