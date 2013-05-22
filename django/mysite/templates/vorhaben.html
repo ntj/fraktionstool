@@ -23,6 +23,29 @@
                     }
                 });
         });
+        // handler to the gremien choice field
+        $("#id_gremium").change(function() {
+            console.log("Change gremium");
+            var gremium_id = this.value;
+            $.getJSON("{% url 'list_vorhaben' %}", { gremium_id: gremium_id },
+                function(vorhaben) {
+                    // Get DOM object for select box
+                    var select = document.getElementById('id_vorhaben');
+                    // Clear the old options
+                    select.length = 0;
+                    // Add new options
+                    for (v in vorhaben) {
+                        if (vorhaben.hasOwnProperty(v)) {
+                            select.options[select.options.length] =
+                                new Option(vorhaben[v], v);
+                        }
+                    }
+                });
+        });
+        // handler to the vorhaben choice field
+        $("#id_vorhaben").change(function() {
+            console.log("Change vorhaben");
+        });
     });
 </script>
 {% endblock %}
