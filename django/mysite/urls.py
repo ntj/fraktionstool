@@ -1,17 +1,17 @@
 from django.conf.urls import patterns, include, url
 from django.contrib.auth.decorators import login_required
 
-from fraktionstool.views import VorhabenList
-from fraktionstool.views import list_gremien
+from fraktionstool.views import NachrichtenList
+from fraktionstool.views import list_gremien, list_vorhaben
 
 from django.contrib import admin
 admin.autodiscover()
 
 urlpatterns = patterns('',
     # Examples:
-    url(r'^$', login_required(VorhabenList.as_view()), name='ftool-home'),
-    url(r'^gremium/(?P<gremium>\d+)/$', login_required(VorhabenList.as_view()),
-        name='ftool-home-gremium'),
+    url(r'^$', login_required(NachrichtenList.as_view()), name='ftool-home'),
+    url(r'^nachrichten/gremium/(?P<gremium>\d+)/vorhaben/(?P<vorhaben>\d+)/$',
+        login_required(NachrichtenList.as_view()), name='ftool-home-gremium'),
     # url(r'^mysite/', include('mysite.foo.urls')),
 
     # Uncomment the admin/doc line below to enable admin documentation:
@@ -30,5 +30,6 @@ urlpatterns += patterns('django.contrib.auth.views',
 # Model retrieval
 urlpatterns += patterns('',
     url(r'^gremium/list$', login_required(list_gremien), name='list_gremien'),
+    url(r'^vorhaben/list$', login_required(list_vorhaben), name='list_vorhaben'),
 )
 

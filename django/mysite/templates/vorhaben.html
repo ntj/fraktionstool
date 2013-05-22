@@ -5,6 +5,7 @@
 <script type="text/javascript">
     // prepare the form when the DOM is ready
     $(document).ready(function() {
+        // handler to "only my gremien" checkbox
         $("#id_my_gremien").change(function() {
             var onlyown = $(this).is(':checked') ? 1 : 0;
             $.getJSON("{% url 'list_gremien' %}", { onlyown: onlyown },
@@ -35,17 +36,17 @@
 </form>
 
 <p>
-{% if vorhaben %}
-    Vorhaben:
+{% if nachrichten %}
+    Nachrichen:
     <table>
-        {% for v in vorhaben %}
+        {% for n in nachrichten %}
             <tr>
-                <td>{{ v }}</td>
+                <td>{{ n }}</td>
             </tr>
         {% endfor %}
     </table>
 {% else %}
-    <em>Es wurden keine Vorhaben gefunden.</em>
+    <em>Es wurden keine Nachrichten gefunden.</em>
 {% endif %}
 </p>
 

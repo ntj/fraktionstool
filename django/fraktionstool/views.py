@@ -1,23 +1,30 @@
 from django.views.generic import ListView
 from fraktionstool.forms import GremiumSelectionForm
-from fraktionstool.models import Gremium, Vorhaben
+from fraktionstool.models import Gremium, Vorhaben, Nachricht
 from django.http import HttpResponse, HttpResponseRedirect
 from django.core.urlresolvers import reverse
 from django.utils import simplejson as json
 
-class VorhabenList(ListView):
-    """ Displays a list of Vorhaben objects and allows a user to specify
-    a Gremium object to display only Vorhaben objects linked to such a
-    Gremium.
+class NachrichtenList(ListView):
+    """ Displays a list of Nachricht objects and allows a user to
+    specify a Gremium and Vorhaben objects to display only Nachricht
+    objects linked to those.
     """
     paginate_by = 10
     template_name = 'vorhaben.html'
-    context_object_name = 'vorhaben'
+    context_object_name = 'nachrichten'
 
     def get_context_data(self, **kwargs):
-        context = super(VorhabenList, self).get_context_data(**kwargs)
-        context['form'] = GremiumSelectionForm()
+        context = super(NachrichtenList, self).get_context_data(**kwargs)
+        # Provide initial form data
+        initial_form_data = {}
+        for field in ['gremium', 'vorhaben', 'my_gremien']:
+            if field in self.kwargs:
+                initial_form_data[field] = self.kwargs[field]
+        # Create extra context
+        context['form'] = GremiumSelectionForm(initial=initial_form_data)
         context['gremium'] = self.gremium
+        context['vorhaben'] = self.vorhaben
 
         return context
 
@@ -28,11 +35,14 @@ class VorhabenList(ListView):
         are returned.
         """
         self.gremium = None
-        if 'gremium' in self.kwargs:
-            gremium_id = self.kwargs['gremium']
-            return Vorhaben.objects.filter(gremien__in=gremium_id)
+        self.vorhaben = None
+        if 'gremium' in self.kwargs and 'vorhaben' in self.kwargs:
+            gremium_id = int(self.kwargs['gremium'])
+            vorhaben_id = int(self.kwargs['vorhaben'])
+            return Nachricht.objects.filter(gremium_id=gremium_id,
+                vorhaben_id=vorhaben_id)
         else:
-            return Vorhaben.objects.all()
+            return Nachricht.objects.all()
 
     def post(self, request, *args, **kwargs):
         """ Reacts to the POST request of the GremiumSelectionForm. If a valid
@@ -43,8 +53,9 @@ class VorhabenList(ListView):
         form = GremiumSelectionForm(request.POST or None)
         if form.is_valid():
             gremium_id = form.cleaned_data['gremium'].id
+            vorhaben_id = form.cleaned_data['vorhaben'].id
             return HttpResponseRedirect(reverse('ftool-home-gremium',
-                 kwargs={'gremium': gremium_id}))
+                 kwargs={'gremium': gremium_id, 'vorhaben': vorhaben_id}))
         else:
             return HttpResponseRedirect(reverse('ftool-home'))
 
@@ -64,3 +75,20 @@ def list_gremien(request):
         gremien[g.id] = g.name
 
     return HttpResponse(json.dumps(gremien))
+
+def list_vorhaben(request):
+    """ Return a JSON object with IDs and names of Vorhaben model objects.
+    If the gremium_id parameter is None, all  Vorhaben objects are returned.
+    """
+    gremium_id = request.GET.get('gremium_id', None)
+    if gremium_id:
+        gremium_ids = [int(gremium_id)]
+        vorhaben_qs = Vorhaben.objects.filter(gremien__in=gremium_ids)
+    else:
+        vorhaben_qs = Vorhaben.objects.all()
+
+    vorhaben = {}
+    for v in vorhaben_qs:
+        vorhaben[v.id] = v.name
+
+    return HttpResponse(json.dumps(vorhaben))
