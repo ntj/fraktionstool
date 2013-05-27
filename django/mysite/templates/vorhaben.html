@@ -3,6 +3,49 @@
 {% block extra_head_content  %}
 <script type="text/javascript" src="{{ STATIC_URL }}js/jquery.js"></script>
 <script type="text/javascript">
+    // A method to update the messages based on the current selection
+    var update_messages = function() {
+        var data = {
+            "gremium_id": document.getElementById('id_gremium').value,
+            "vorhaben_id": document.getElementById('id_vorhaben').value
+        };
+
+        $.getJSON("{% url 'list_nachrichten' %}", data,
+            function(nachrichten) {
+                // Get DOM object for select box
+                var container = document.getElementById('messages');
+                // Remove the old content
+                while (container.firstChild) {
+                    container.removeChild(container.firstChild);
+                };
+                // Add new content
+                if (Object.keys(nachrichten).length == 0) {
+                    var em_tag = document.createElement('em');
+                    var text = document.createTextNode(
+                        "Es wurden keine Nachrichten gefunden.");
+                    em_tag.appendChild(text);
+                    container.appendChild(em_tag);
+                } else {
+                    var table = document.createElement('table');
+                    // Add new messages
+                    for (n in nachrichten) {
+                        if (nachrichten.hasOwnProperty(n)) {
+                            var tr = document.createElement('tr');
+                            var td = document.createElement('td');
+                            var text = document.createTextNode(
+                                nachrichten[n]);
+                            td.appendChild(text);
+                            tr.appendChild(td);
+                            table.appendChild(tr);
+                        }
+                    };
+                    container.appendChild(
+                        document.createTextNode('Nachrichten:'));
+                    container.appendChild(table);
+                }
+            });
+    };
+
     // prepare the form when the DOM is ready
     $(document).ready(function() {
         // handler to "only my gremien" checkbox
@@ -21,6 +64,8 @@
                                 new Option(gremien[g], g);
                         }
                     }
+                    // Update messages list
+                    update_messages();
                 });
         });
         // handler to the gremien choice field
@@ -40,11 +85,14 @@
                                 new Option(vorhaben[v], v);
                         }
                     }
+                    // Update messages list
+                    update_messages();
                 });
         });
         // handler to the vorhaben choice field
         $("#id_vorhaben").change(function() {
-            console.log("Change vorhaben");
+            // Update messages list
+            update_messages();
         });
     });
 </script>
@@ -59,6 +107,7 @@
 </form>
 
 <p>
+<div id="messages">
 {% if nachrichten %}
     Nachrichen:
     <table>
@@ -71,6 +120,7 @@
 {% else %}
     <em>Es wurden keine Nachrichten gefunden.</em>
 {% endif %}
+</div>
 </p>
 
 <div class="pagination">
