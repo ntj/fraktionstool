@@ -92,3 +92,26 @@ def list_vorhaben(request):
         vorhaben[v.id] = v.name
 
     return HttpResponse(json.dumps(vorhaben))
+
+def list_nachrichten(request):
+    """ Return a JSON object with IDs and names of Nachricht model objects.
+    If the gremium_id and the vorhaben_id parameter is None, all Nachrichten
+    objects are returned.
+    """
+    gremium_id = request.GET.get('gremium_id', None)
+    vorhaben_id = request.GET.get('vorhaben_id', None)
+    if gremium_id and vorhaben_id:
+        nachrichten_qs = Nachricht.objects.filter(gremium_id=gremium_id,
+            vorhaben_id=vorhaben_id)
+    elif gremium_id:
+        nachrichten_qs = Nachricht.objects.filter(gremium_id=gremium_id)
+    elif vorhaben_id:
+        nachrichten_qs = Nachricht.objects.filter(vorhaben_id=vorhaben_id)
+    else:
+        nachrichten_qs = Nachricht.objects.all()
+
+    nachrichten = {}
+    for n in nachrichten_qs:
+        nachrichten[n.id] = n.text
+
+    return HttpResponse(json.dumps(nachrichten))

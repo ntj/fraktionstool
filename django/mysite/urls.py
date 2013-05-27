@@ -2,7 +2,7 @@ from django.conf.urls import patterns, include, url
 from django.contrib.auth.decorators import login_required
 
 from fraktionstool.views import NachrichtenList
-from fraktionstool.views import list_gremien, list_vorhaben
+from fraktionstool.views import list_gremien, list_vorhaben, list_nachrichten
 
 from django.contrib import admin
 admin.autodiscover()
@@ -31,5 +31,7 @@ urlpatterns += patterns('django.contrib.auth.views',
 urlpatterns += patterns('',
     url(r'^gremium/list$', login_required(list_gremien), name='list_gremien'),
     url(r'^vorhaben/list$', login_required(list_vorhaben), name='list_vorhaben'),
+    url(r'^nachrichten/list$', login_required(list_nachrichten),
+        name='list_nachrichten'),
 )
 
