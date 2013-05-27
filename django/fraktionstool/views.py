@@ -78,7 +78,7 @@ def list_gremien(request):
 
 def list_vorhaben(request):
     """ Return a JSON object with IDs and names of Vorhaben model objects.
-    If the gremium_id parameter is None, all  Vorhaben objects are returned.
+    If the gremium_id parameter is None, all Vorhaben objects are returned.
     """
     gremium_id = request.GET.get('gremium_id', None)
     if gremium_id:
