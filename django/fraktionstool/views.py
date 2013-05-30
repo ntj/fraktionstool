@@ -11,7 +11,7 @@ class NachrichtenList(ListView):
     objects linked to those.
     """
     paginate_by = 10
-    template_name = 'vorhaben.html'
+    template_name = 'nachrichten.html'
     context_object_name = 'nachrichten'
 
     def get_context_data(self, **kwargs):
