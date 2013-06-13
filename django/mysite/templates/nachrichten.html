@@ -131,7 +131,12 @@
     {% if nachrichten %}
         <div id="messagesheader">Nachrichten</div>
         {% for n in nachrichten %}
-            <div class="message">{{ n }}</div>
+            <div class="message">
+                <div class="author">Author: {{ n.owner }}</div>
+                <div class="gremium">Gremium: {{ n.gremium.name }}</div>
+                <div style="clear:both;"></div>
+                <div class="messagetext">{{ n.text }}</div>
+            </div>
         {% endfor %}
 {% else %}
     <em>Es wurden keine Nachrichten gefunden.</em>

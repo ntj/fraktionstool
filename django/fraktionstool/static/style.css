@@ -121,3 +121,17 @@ div.message {
     overflow: auto;
     margin: 3px;
 }
+
+div.message div.author {
+    color: #777777;
+    float: left;
+    clear: left;
+    margin-bottom: 0.5em;
+}
+
+div.message div.gremium {
+    color: #777777;
+    float: right;
+    float: right;
+    margin-bottom: 0.5em;
+}
