@@ -19,29 +19,29 @@
                     container.removeChild(container.firstChild);
                 };
                 // Add new content
+                var msg_container = document.createElement('div');
+                msg_container.setAttribute("id", "messagesheader");
                 if (Object.keys(nachrichten).length == 0) {
                     var em_tag = document.createElement('em');
                     var text = document.createTextNode(
                         "Es wurden keine Nachrichten gefunden.");
                     em_tag.appendChild(text);
-                    container.appendChild(em_tag);
+                    msg_container.appendChild(em_tag);
+                    container.appendChild(msg_container);
                 } else {
-                    var table = document.createElement('table');
+                    msg_container.appendChild(
+                        document.createTextNode('Nachrichten:'));
+                    container.appendChild(msg_container);
                     // Add new messages
                     for (n in nachrichten) {
                         if (nachrichten.hasOwnProperty(n)) {
-                            var tr = document.createElement('tr');
-                            var td = document.createElement('td');
-                            var text = document.createTextNode(
-                                nachrichten[n]);
-                            td.appendChild(text);
-                            tr.appendChild(td);
-                            table.appendChild(tr);
+                            var msg = document.createElement('div');
+                            msg.setAttribute("class", "message");
+                            var text = document.createTextNode(nachrichten[n]);
+                            msg.appendChild(text);
+                            container.appendChild(msg);
                         }
                     };
-                    container.appendChild(
-                        document.createTextNode('Nachrichten:'));
-                    container.appendChild(table);
                 }
             });
     };
@@ -98,25 +98,41 @@
 </script>
 {% endblock %}
 
+{% block extra_page_header %}
+<div id="header_page_name">Nachrichtenübersicht</div>
+{% endblock %}
+
 {% block content %}
-<h1>Hallo und willkommen im Fraktionstool</h1>
-<form action="" method="post">
+<div class="contentblock">
+<div id="messageselection">
+<form action="" method="post" id="messageselectionform">
     {% csrf_token %}
-    {{form.as_p}}
-    <input type="submit" value="Aktualisieren" />
+    <div id="gremiumfield">
+        <label for="id_gremium">{{ form.gremium.label }}:</label>
+        {{ form.gremium }}
+    </div>
+    <div id="mygremienfield">
+        <label for="id_my_gremien">{{ form.my_gremien.label }}:</label>
+        {{ form.my_gremien }}
+    </div>
+    <div id="vorhabenfield">
+        <label for="id_vorhaben">{{ form.vorhaben.label }}:</label>
+        {{ form.vorhaben }}
+    </div>
+    <div id="selectmessages">
+        <input type="submit" value="Aktualisieren" />
+    </div>
 </form>
+</div>
+<div style="clear:both;"></div>
 
 <p>
 <div id="messages">
-{% if nachrichten %}
-    Nachrichten:
-    <table>
+    {% if nachrichten %}
+        <div id="messagesheader">Nachrichten</div>
         {% for n in nachrichten %}
-            <tr>
-                <td>{{ n }}</td>
-            </tr>
+            <div class="message">{{ n }}</div>
         {% endfor %}
-    </table>
 {% else %}
     <em>Es wurden keine Nachrichten gefunden.</em>
 {% endif %}
@@ -131,13 +147,14 @@
         {% endif %}
 
         <span class="current">
-            Seite {{ page_obj.number }} von {{ paginator.num_pages }}.
+            Seite {{ page_obj.number }} von {{ paginator.num_pages }}
         </span>
 
         {% if page_obj.has_next %}
             <a href="?page={{ page_obj.next_page_number }}">vor</a>
         {% endif %}
     </span>
+</div>
 </div>
 {% endif %}
 {% endblock %}

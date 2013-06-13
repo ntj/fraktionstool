@@ -51,12 +51,73 @@ div#header a:visited {
     text-decoration: none;
 }
 
+.raggedleft {
+    float: left;
+    clear: left;
+}
+
 .raggedright {
     float: right;
+    clear: right;
+}
+
+div#header_page_name {
+	color: #ed1c24;
+    font-weight: bold;
 }
 
 div#content {
     postion: relative;
     overflow: auto;
     padding: 3px;
+}
+
+div.contentblock {
+    width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+    border: 1px dotted #CB4B16;
+    padding: 8px;
+    overflow: auto;
+    margin-top: 3em;
+}
+
+div#messageselection,
+div.pagination {
+    border: 1px dotted #CB4B16;
+    background-color: #FDF6E3;
+    padding: 6px;
+    overflow: auto;
+    margin: 3px;
+}
+
+div.pagination {
+    font-size: small;
+    text-align: center;
+}
+
+div#gremiumfield,
+div#vorhabenfield {
+    float: left;
+    clear: left;
+}
+
+div#mygremienfield,
+div#selectmessages {
+    float: right;
+    clear: rightr;
+}
+
+div#messagesheader {
+    padding: 6px;
+    overflow: auto;
+    margin: 3px;
+}
+
+div.message {
+    border: 1px dotted #CB4B16;
+    background-color: #EFF5F5;
+    padding: 6px;
+    overflow: auto;
+    margin: 3px;
 }

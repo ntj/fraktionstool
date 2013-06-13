@@ -8,6 +8,9 @@
 
 <body>
     <div id="header">
+        <div class="raggedleft">
+            {% block extra_page_header %}{% endblock %}
+        </div>
         {% if user.is_authenticated %}
             <a class="raggedright" href="/logout">Abmelden</a>
         {% endif %}
