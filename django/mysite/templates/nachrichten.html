@@ -5,45 +5,15 @@
 <script type="text/javascript">
     // A method to update the messages based on the current selection
     var update_messages = function() {
-        var data = {
-            "gremium_id": document.getElementById('id_gremium').value,
-            "vorhaben_id": document.getElementById('id_vorhaben').value
-        };
+        // get message only URL with bogus params (to replace them later)
+        var url = "{% url 'ftool-home-gremium' '1234' '5678' %}";
+        // add real parameters
+        url = url.replace('1234',
+            document.getElementById('id_gremium').value);
+        url = url.replace('5678',
+            document.getElementById('id_vorhaben').value);
 
-        $.getJSON("{% url 'list_nachrichten' %}", data,
-            function(nachrichten) {
-                // Get DOM object for select box
-                var container = document.getElementById('messages');
-                // Remove the old content
-                while (container.firstChild) {
-                    container.removeChild(container.firstChild);
-                };
-                // Add new content
-                var msg_container = document.createElement('div');
-                msg_container.setAttribute("id", "messagesheader");
-                if (Object.keys(nachrichten).length == 0) {
-                    var em_tag = document.createElement('em');
-                    var text = document.createTextNode(
-                        "Es wurden keine Nachrichten gefunden.");
-                    em_tag.appendChild(text);
-                    msg_container.appendChild(em_tag);
-                    container.appendChild(msg_container);
-                } else {
-                    msg_container.appendChild(
-                        document.createTextNode('Nachrichten:'));
-                    container.appendChild(msg_container);
-                    // Add new messages
-                    for (n in nachrichten) {
-                        if (nachrichten.hasOwnProperty(n)) {
-                            var msg = document.createElement('div');
-                            msg.setAttribute("class", "message");
-                            var text = document.createTextNode(nachrichten[n]);
-                            msg.appendChild(text);
-                            container.appendChild(msg);
-                        }
-                    };
-                }
-            });
+        $('#messagesection').load(url + " #messagesection");
     };
 
     // prepare the form when the DOM is ready
@@ -126,7 +96,7 @@
 </div>
 <div style="clear:both;"></div>
 
-<p>
+<div id="messagesection">
 <div id="messages">
     {% if nachrichten %}
         <div id="messagesheader">Nachrichten</div>
@@ -142,7 +112,6 @@
     <em>Es wurden keine Nachrichten gefunden.</em>
 {% endif %}
 </div>
-</p>
 
 {% if nachrichten %}
 <div class="pagination">
@@ -160,6 +129,7 @@
         {% endif %}
     </span>
 </div>
-</div>
 {% endif %}
+</div>
+</div>
 {% endblock %}
