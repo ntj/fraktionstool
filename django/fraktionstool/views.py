@@ -51,15 +51,15 @@ class NachrichtenList(ListView):
         the linked Vorhaben objects. Otherwise, the redirect is made without a
         Gremium object.
         """
-        if request.POST and "source_form" in request.POST:
-            if request.POST["source_form"] == "update_messages":
+        if request.POST:
+            if 'update_messages' in request.POST:
                 form = GremiumSelectionForm(request.POST or None)
                 if form.is_valid():
                     gremium_id = form.cleaned_data['gremium'].id
                     vorhaben_id = form.cleaned_data['vorhaben'].id
                     return HttpResponseRedirect(reverse('ftool-home-gremium',
                          kwargs={'gremium': gremium_id, 'vorhaben': vorhaben_id}))
-            elif request.POST["source_form"] == "submit_message":
+            elif 'create_message' in request.POST:
                 message_form = MessageForm(request.POST)
                 gremium_form = GremiumSelectionForm(request.POST)
                 if message_form.is_valid() and gremium_form.is_valid():

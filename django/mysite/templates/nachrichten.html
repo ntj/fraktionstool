@@ -91,7 +91,6 @@
         </div>
         <div id="selectmessages">
             <input type="submit" name="update_messages" value="Aktualisieren" />
-            <input type="hidden" name="source_form" value="update_messages" />
         </div>
     </div>
     <div style="clear:both;"></div>
@@ -100,7 +99,6 @@
         {% csrf_token %}
         {{ nachrichtform }}
         <input type="submit" name="create_message" value="Abschicken" />
-        <input type="hidden" name="source_form" value="submit_message" />
     </div>
 </form>
 <div style="clear:both;"></div>
