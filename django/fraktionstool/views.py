@@ -38,10 +38,8 @@ class NachrichtenList(ListView):
         self.gremium = None
         self.vorhaben = None
         if 'gremium' in self.kwargs and 'vorhaben' in self.kwargs:
-            gremium_id = int(self.kwargs['gremium'])
             vorhaben_id = int(self.kwargs['vorhaben'])
-            return Nachricht.objects.filter(gremium_id=gremium_id,
-                vorhaben_id=vorhaben_id)
+            return Nachricht.objects.filter(vorhaben_id=vorhaben_id)
         else:
             return Nachricht.objects.all()
 
