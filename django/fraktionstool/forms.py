@@ -1,5 +1,5 @@
 from django import forms
-from fraktionstool.models import Gremium, Vorhaben
+from fraktionstool.models import Gremium, Vorhaben, Nachricht
 
 class GremiumSelectionForm(forms.Form):
 	gremium = forms.ModelChoiceField(empty_label=None,
@@ -9,3 +9,8 @@ class GremiumSelectionForm(forms.Form):
 	my_gremien = forms.BooleanField(
 		label='Nur meine Gremien',
 		required=False)
+
+class MessageForm(forms.ModelForm):
+	class Meta:
+		model = Nachricht
+		fields = ["text"]

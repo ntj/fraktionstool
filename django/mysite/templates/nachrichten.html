@@ -74,26 +74,35 @@
 
 {% block content %}
 <div class="contentblock">
-<div id="messageselection">
 <form action="" method="post" id="messageselectionform">
-    {% csrf_token %}
-    <div id="gremiumfield">
-        <label for="id_gremium">{{ form.gremium.label }}:</label>
-        {{ form.gremium }}
+    <div id="messageselection">
+        {% csrf_token %}
+        <div id="gremiumfield">
+            <label for="id_gremium">{{ form.gremium.label }}:</label>
+            {{ form.gremium }}
+        </div>
+        <div id="mygremienfield">
+            <label for="id_my_gremien">{{ form.my_gremien.label }}:</label>
+            {{ form.my_gremien }}
+        </div>
+        <div id="vorhabenfield">
+            <label for="id_vorhaben">{{ form.vorhaben.label }}:</label>
+            {{ form.vorhaben }}
+        </div>
+        <div id="selectmessages">
+            <input type="submit" name="update_messages" value="Aktualisieren" />
+            <input type="hidden" name="source_form" value="update_messages" />
+        </div>
     </div>
-    <div id="mygremienfield">
-        <label for="id_my_gremien">{{ form.my_gremien.label }}:</label>
-        {{ form.my_gremien }}
-    </div>
-    <div id="vorhabenfield">
-        <label for="id_vorhaben">{{ form.vorhaben.label }}:</label>
-        {{ form.vorhaben }}
-    </div>
-    <div id="selectmessages">
-        <input type="submit" value="Aktualisieren" />
+    <div style="clear:both;"></div>
+
+    <div>
+        {% csrf_token %}
+        {{ nachrichtform }}
+        <input type="submit" name="create_message" value="Abschicken" />
+        <input type="hidden" name="source_form" value="submit_message" />
     </div>
 </form>
-</div>
 <div style="clear:both;"></div>
 
 <div id="messagesection">

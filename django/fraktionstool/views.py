@@ -1,5 +1,5 @@
 from django.views.generic import ListView
-from fraktionstool.forms import GremiumSelectionForm
+from fraktionstool.forms import GremiumSelectionForm, MessageForm
 from fraktionstool.models import Gremium, Vorhaben, Nachricht
 from django.http import HttpResponse, HttpResponseRedirect
 from django.core.urlresolvers import reverse
@@ -25,6 +25,7 @@ class NachrichtenList(ListView):
         context['form'] = GremiumSelectionForm(initial=initial_form_data)
         context['gremium'] = self.gremium
         context['vorhaben'] = self.vorhaben
+        context['nachrichtform'] = MessageForm()
 
         return context
 
@@ -50,14 +51,26 @@ class NachrichtenList(ListView):
         the linked Vorhaben objects. Otherwise, the redirect is made without a
         Gremium object.
         """
-        form = GremiumSelectionForm(request.POST or None)
-        if form.is_valid():
-            gremium_id = form.cleaned_data['gremium'].id
-            vorhaben_id = form.cleaned_data['vorhaben'].id
-            return HttpResponseRedirect(reverse('ftool-home-gremium',
-                 kwargs={'gremium': gremium_id, 'vorhaben': vorhaben_id}))
-        else:
-            return HttpResponseRedirect(reverse('ftool-home'))
+        if request.POST and "source_form" in request.POST:
+            if request.POST["source_form"] == "update_messages":
+                form = GremiumSelectionForm(request.POST or None)
+                if form.is_valid():
+                    gremium_id = form.cleaned_data['gremium'].id
+                    vorhaben_id = form.cleaned_data['vorhaben'].id
+                    return HttpResponseRedirect(reverse('ftool-home-gremium',
+                         kwargs={'gremium': gremium_id, 'vorhaben': vorhaben_id}))
+            elif request.POST["source_form"] == "submit_message":
+                message_form = MessageForm(request.POST)
+                gremium_form = GremiumSelectionForm(request.POST)
+                if message_form.is_valid() and gremium_form.is_valid():
+                    text = message_form.cleaned_data['text']
+                    gremium_id = gremium_form.cleaned_data['gremium'].id
+                    vorhaben_id = gremium_form.cleaned_data['vorhaben'].id
+                    Nachricht.objects.create(text=text, gremium_id=gremium_id,
+                            vorhaben_id=vorhaben_id, owner=request.user)
+                    return HttpResponseRedirect(reverse('ftool-home-gremium',
+                         kwargs={'gremium': gremium_id, 'vorhaben': vorhaben_id}))
+        return HttpResponseRedirect(reverse('ftool-home'))
 
 def list_gremien(request):
     """ Return a JSON object with IDs and names of Gremium model objects.
