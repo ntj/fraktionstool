@@ -100,9 +100,8 @@ def list_vorhaben(request):
         vorhaben_qs = Vorhaben.objects.all()
 
     vorhaben = {}
-    for v in vorhaben_qs:
+    for v in vorhaben_qs.exclude(geschlossen__exact=True):
         vorhaben[v.id] = v.name
-
     return HttpResponse(json.dumps(vorhaben))
 
 def list_nachrichten(request):
