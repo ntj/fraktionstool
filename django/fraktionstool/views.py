@@ -39,9 +39,10 @@ class NachrichtenList(ListView):
         self.vorhaben = None
         if 'gremium' in self.kwargs and 'vorhaben' in self.kwargs:
             vorhaben_id = int(self.kwargs['vorhaben'])
-            return Nachricht.objects.filter(vorhaben_id=vorhaben_id)
+            nachrichten = Nachricht.objects.filter(vorhaben_id=vorhaben_id)
         else:
-            return Nachricht.objects.all()
+            nachrichten = Nachricht.objects.all()
+        return nachrichten.order_by('-id');
 
     def post(self, request, *args, **kwargs):
         """ Reacts to the POST request of the GremiumSelectionForm. If a valid
@@ -122,7 +123,7 @@ def list_nachrichten(request):
         nachrichten_qs = Nachricht.objects.all()
 
     nachrichten = {}
-    for n in nachrichten_qs:
+    for n in nachrichten_qs.oder_by('-id'):
         nachrichten[n.id] = n.text
-
+    
     return HttpResponse(json.dumps(nachrichten))
