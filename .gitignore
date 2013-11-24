@@ -1,2 +1,3 @@
 *.pyc
 django/mysite/settings.py
+django/static
