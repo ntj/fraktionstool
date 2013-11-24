@@ -135,3 +135,7 @@ div.message div.gremium {
     float: right;
     margin-bottom: 0.5em;
 }
+
+.has_messages{
+background-color: rgb(157, 228, 133);
+}
