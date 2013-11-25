@@ -10,8 +10,9 @@ class GremiumSelectionForm(forms.Form):
 	gremium = forms.ModelChoiceField(empty_label=None,
 		queryset=Gremium.objects.all())
 	vorhaben = forms.ModelChoiceField(empty_label=None,
-        widget=OptionClassesSelect(attrs={'size':'5'},get_option_class=highlight_messages),
-		queryset=Vorhaben.objects.all().exclude(geschlossen__exact=True))
+        widget=OptionClassesSelect(attrs={'size':'5'},
+            get_option_class=highlight_messages,selected_index=0),
+		queryset=Vorhaben.objects.exclude(geschlossen=True))
 	my_gremien = forms.BooleanField(
 		label='Nur meine Gremien',
 		required=False)

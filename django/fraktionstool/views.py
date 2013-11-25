@@ -22,7 +22,12 @@ class NachrichtenList(ListView):
             if field in self.kwargs:
                 initial_form_data[field] = self.kwargs[field]
         # Create extra context
-        context['form'] = GremiumSelectionForm(initial=initial_form_data)
+        form = GremiumSelectionForm(initial=initial_form_data)
+        if 'gremium' in self.kwargs:
+            vorhaben_field = form.fields['vorhaben']
+            vorhaben_field.queryset = vorhaben_field.queryset.filter(
+                    gremien=self.kwargs['gremium'])
+        context['form'] = form
         context['gremium'] = self.gremium
         context['vorhaben'] = self.vorhaben
         context['nachrichtform'] = MessageForm()
