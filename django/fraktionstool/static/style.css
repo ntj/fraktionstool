@@ -139,3 +139,38 @@ div.message div.gremium {
 .has_messages{
 background-color: rgb(157, 228, 133);
 }
+
+div#gremiumfield label{
+width:100px;
+display:inline-block;
+}
+
+div#vorhabenfield{
+margin-top:5px;
+}
+
+div#vorhabenfield label{
+width:100px;
+display:inline-block;
+}
+
+div#selectmessages{
+margin-top:70px;
+}
+
+div#createmessage{
+margin-top: 5px;
+}
+
+div#createmessage label{
+width:110px;
+margin-left: 5px;
+display:inline-block;
+}
+
+div#createmessage input#submitbutton{
+float: right;
+margin-top: 147px;
+margin-right: 15px;
+}
+

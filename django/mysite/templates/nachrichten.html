@@ -70,10 +70,10 @@
     </div>
     <div style="clear:both;"></div>
 
-    <div>
+    <div id="createmessage">
         {% csrf_token %}
         {{ nachrichtform }}
-        <input type="submit" name="create_message" value="Abschicken" />
+        <input id='submitbutton' type="submit" name="create_message" value="Abschicken" />
     </div>
 </form>
 <div style="clear:both;"></div>
