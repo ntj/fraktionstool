@@ -4,78 +4,78 @@ from django.db import models
 from django.contrib.auth.models import User
 
 class GremiumTyp(models.Model):
-	class Meta:
-		verbose_name = "Gremientyp"
-		verbose_name_plural = "Gremientypen"
+    class Meta:
+        verbose_name = "Gremientyp"
+        verbose_name_plural = "Gremientypen"
 
-	name = models.CharField(max_length=255)
+    name = models.CharField(max_length=255)
 
-	def __unicode__(self):
-		return self.name
+    def __unicode__(self):
+        return self.name
 
 class Gremium(models.Model):
-	class Meta:
-		verbose_name = "Gremium"
-		verbose_name_plural = "Gremien"
+    class Meta:
+        verbose_name = "Gremium"
+        verbose_name_plural = "Gremien"
 
-	name = models.CharField(max_length=255)
-	typ = models.ForeignKey(GremiumTyp)
-	member = models.ManyToManyField(User, through='GremiumUser')
+    name = models.CharField(max_length=255)
+    typ = models.ForeignKey(GremiumTyp)
+    member = models.ManyToManyField(User, through='GremiumUser')
 
-	def __unicode__(self):
-		return self.name
+    def __unicode__(self):
+        return self.name
 
 class GremiumUser(models.Model):
-	class Meta:
-		verbose_name = "Gremium-User-Verknüpfung"
-		verbose_name_plural = "Gremium-User-Verknüpfungen"
+    class Meta:
+        verbose_name = "Gremium-User-Verknüpfung"
+        verbose_name_plural = "Gremium-User-Verknüpfungen"
 
-	gremium = models.ForeignKey(Gremium)
-	user = models.ForeignKey(User)
+    gremium = models.ForeignKey(Gremium)
+    user = models.ForeignKey(User)
 
 class VorhabenTyp(models.Model):
-	class Meta:
-		verbose_name = "Vorhabentyp"
-		verbose_name_plural = "Vorhabentypen"
+    class Meta:
+        verbose_name = "Vorhabentyp"
+        verbose_name_plural = "Vorhabentypen"
 
-	name = models.CharField(max_length=255)
+    name = models.CharField(max_length=255)
 
-	def __unicode__(self):
-		return self.name
+    def __unicode__(self):
+        return self.name
 
 class Vorhaben(models.Model):
-	class Meta:
-		verbose_name = "Vorhaben"
-		verbose_name_plural = "Vorhaben"
+    class Meta:
+        verbose_name = "Vorhaben"
+        verbose_name_plural = "Vorhaben"
 
-	name = models.CharField(max_length=255)
-	nummer = models.CharField(max_length=255)
-	typ = models.ForeignKey(VorhabenTyp)
-	beobachten = models.BooleanField()
-	geschlossen = models.BooleanField()
-	gremien = models.ManyToManyField(Gremium, through='GremiumVorhaben')
+    name = models.CharField(max_length=255)
+    nummer = models.CharField(max_length=255)
+    typ = models.ForeignKey(VorhabenTyp)
+    beobachten = models.BooleanField()
+    geschlossen = models.BooleanField()
+    gremien = models.ManyToManyField(Gremium, through='GremiumVorhaben')
 
-	def __unicode__(self):
-		return self.name
+    def __unicode__(self):
+        return self.name
 
 class GremiumVorhaben(models.Model):
-	class Meta:
-		verbose_name = "Gremien-Vorhaben-Verknüpfung"
-		verbose_name_plural = "Gremien-Vorhaben-Verknüpfungen"
+    class Meta:
+        verbose_name = "Gremien-Vorhaben-Verknüpfung"
+        verbose_name_plural = "Gremien-Vorhaben-Verknüpfungen"
 
-	gremium = models.ForeignKey(Gremium)
-	vorhaben = models.ForeignKey(Vorhaben)
+    gremium = models.ForeignKey(Gremium)
+    vorhaben = models.ForeignKey(Vorhaben)
 
 class Nachricht(models.Model):
-	class Meta:
-		verbose_name = "Nachricht"
-		verbose_name_plural = "Nachrichten"
+    class Meta:
+        verbose_name = "Nachricht"
+        verbose_name_plural = "Nachrichten"
 
-	text = models.TextField()
-	owner = models.ForeignKey(User)
-	vorhaben = models.ForeignKey(Vorhaben)
-	gremium = models.ForeignKey(Gremium)
+    text = models.TextField()
+    owner = models.ForeignKey(User)
+    vorhaben = models.ForeignKey(Vorhaben)
+    gremium = models.ForeignKey(Gremium)
 
-	def __unicode__(self):
-		return self.text
+    def __unicode__(self):
+        return self.text
 
