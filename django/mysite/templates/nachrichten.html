@@ -5,15 +5,7 @@
 <script type="text/javascript">
     // A method to update the messages based on the current selection
     var update_messages = function() {
-        // get message only URL with bogus params (to replace them later)
-        var url = "{% url 'ftool-home-gremium' '1234' '5678' %}";
-        // add real parameters
-        url = url.replace('1234',
-            document.getElementById('id_gremium').value);
-        url = url.replace('5678',
-            document.getElementById('id_vorhaben').value);
-
-        $('#messagesection').load(url + " #messagesection");
+        $('div#selectmessages input').click();
     };
 
     // prepare the form when the DOM is ready
@@ -40,24 +32,7 @@
         });
         // handler to the gremien choice field
         $("#id_gremium").change(function() {
-            console.log("Change gremium");
-            var gremium_id = this.value;
-            $.getJSON("{% url 'list_vorhaben' %}", { gremium_id: gremium_id },
-                function(vorhaben) {
-                    // Get DOM object for select box
-                    var select = document.getElementById('id_vorhaben');
-                    // Clear the old options
-                    select.length = 0;
-                    // Add new options
-                    for (v in vorhaben) {
-                        if (vorhaben.hasOwnProperty(v)) {
-                            select.options[select.options.length] =
-                                new Option(vorhaben[v], v);
-                        }
-                    }
-                    // Update messages list
-                    update_messages();
-                });
+            update_messages();
         });
         // handler to the vorhaben choice field
         $("#id_vorhaben").change(function() {
