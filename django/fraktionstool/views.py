@@ -1,5 +1,6 @@
 from django.views.generic import ListView
 from fraktionstool.forms import GremiumSelectionForm, MessageForm
+from fraktionstool.forms import AbstimmungsForm
 from fraktionstool.models import Gremium, Vorhaben, Nachricht
 from django.http import HttpResponse, HttpResponseRedirect
 from django.core.urlresolvers import reverse
@@ -23,6 +24,7 @@ class NachrichtenList(ListView):
                 initial_form_data[field] = self.kwargs[field]
         # Create extra context
         form = GremiumSelectionForm(initial=initial_form_data)
+
         vorhaben_field = form.fields['vorhaben']
         if 'gremium' in self.kwargs:
             vorhaben_field.queryset = vorhaben_field.queryset.filter(
@@ -31,11 +33,21 @@ class NachrichtenList(ListView):
             first_gremium_id = form.fields['gremium'].queryset[:1].get().id
             vorhaben_field.queryset = vorhaben_field.queryset.filter(
                     gremien=first_gremium_id)
-        context['form'] = form
-        context['gremium'] = self.gremium
-        context['vorhaben'] = self.vorhaben
-        context['nachrichtform'] = MessageForm()
 
+        if 'vorhaben' in self.kwargs:
+            selected_vorhaben_id = self.kwargs['vorhaben']
+            if not vorhaben_field.queryset.filter(
+                    id=selected_vorhaben_id).exists():
+                selected_vorhaben_id = vorhaben_field.queryset[:1].get().id
+        else:
+            selected_vorhaben_id = vorhaben_field.queryset[:1].get().id
+        selected_vorhaben = vorhaben_field.queryset.filter(
+                id=selected_vorhaben_id).get()
+
+        context['abstimmungsform'] = AbstimmungsForm(
+            instance=selected_vorhaben)
+        context['form'] = form
+        context['nachrichtform'] = MessageForm()
         return context
 
     def get_queryset(self):
@@ -44,8 +56,6 @@ class NachrichtenList(ListView):
         linked to the Gremium object specified. Otherwise all Vorhaben objects
         are returned.
         """
-        self.gremium = None
-        self.vorhaben = None
         if 'gremium' in self.kwargs and 'vorhaben' in self.kwargs:
             vorhaben_id = int(self.kwargs['vorhaben'])
             nachrichten = Nachricht.objects.filter(vorhaben_id=vorhaben_id)
@@ -61,7 +71,7 @@ class NachrichtenList(ListView):
         """
         if request.POST:
             if 'update_messages' in request.POST:
-                form = GremiumSelectionForm(request.POST or None)
+                form = GremiumSelectionForm(request.POST)
                 if form.is_valid():
                     gremium_id = form.cleaned_data['gremium'].id
                     vorhaben_id = form.cleaned_data['vorhaben'].id
@@ -78,6 +88,18 @@ class NachrichtenList(ListView):
                             vorhaben_id=vorhaben_id, owner=request.user)
                     return HttpResponseRedirect(reverse('ftool-home-gremium',
                          kwargs={'gremium': gremium_id, 'vorhaben': vorhaben_id}))
+            elif 'change_abstimmung' in request.POST:
+                abstimmungs_form = AbstimmungsForm(request.POST)
+                gremium_form = GremiumSelectionForm(request.POST)
+                if abstimmungs_form.is_valid() and gremium_form.is_valid():
+                    gremium_id = gremium_form.cleaned_data['gremium'].id
+                    abstimmung = abstimmungs_form.cleaned_data['abstimmung']
+                    vorhaben = gremium_form.cleaned_data['vorhaben']
+                    vorhaben.abstimmung = abstimmung
+                    vorhaben.save()
+                return HttpResponseRedirect(reverse('ftool-home-gremium',
+                    kwargs={'gremium': gremium_id, 'vorhaben': vorhaben.id}))
+
         return HttpResponseRedirect(reverse('ftool-home'))
 
 def list_gremien(request):

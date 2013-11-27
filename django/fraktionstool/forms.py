@@ -17,6 +17,14 @@ class GremiumSelectionForm(forms.Form):
 		label='Nur meine Gremien',
 		required=False)
 
+class AbstimmungsForm(forms.ModelForm):
+    class Meta:
+        model = Vorhaben
+        fields = ["abstimmung"]
+        widgets = {
+          'abstimmung': forms.Textarea(attrs={'rows':'6'}),
+        }
+
 class MessageForm(forms.ModelForm):
 	class Meta:
 		model = Nachricht

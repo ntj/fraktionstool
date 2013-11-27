@@ -69,15 +69,20 @@
         </div>
     </div>
     <div style="clear:both;"></div>
-
+    <div id="editabstimmung">
+       {{ abstimmungsform }}
+        <input id='changebutton' type="submit" name="change_abstimmung"
+            value="Speichern"/>
+    </div>
     <div id="createmessage">
-        {% csrf_token %}
         {{ nachrichtform }}
         <input id='submitbutton' type="submit" name="create_message" value="Abschicken" />
     </div>
 </form>
 <div style="clear:both;"></div>
-
+<div id="abstimmung">
+{{ abstimmung}}
+</div>
 <div id="messagesection">
 <div id="messages">
     {% if nachrichten %}
