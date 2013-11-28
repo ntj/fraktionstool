@@ -7,9 +7,9 @@ def highlight_messages(option_value):
     return 'has_messages' if has_messages else 'has_no_messages'
 
 class GremiumSelectionForm(forms.Form):
-	gremium = forms.ModelChoiceField(empty_label=None,
-		queryset=Gremium.objects.all().order_by('name'))
-	vorhaben = forms.ModelChoiceField(empty_label=None,
+    gremium = forms.ModelChoiceField(empty_label=None,
+        queryset=Gremium.objects.all().order_by('name'))
+    vorhaben = forms.ModelChoiceField(empty_label=None,
         widget=OptionClassesSelect(attrs={'size':'5'},
             get_option_class=highlight_messages,selected_index=0),
 		queryset=Vorhaben.objects.exclude(geschlossen=True).order_by('name'))
@@ -26,9 +26,9 @@ class AbstimmungsForm(forms.ModelForm):
         }
 
 class MessageForm(forms.ModelForm):
-	class Meta:
-		model = Nachricht
-		fields = ["text"]
+    class Meta:
+        model = Nachricht
+        fields = ["text"]
         widgets = {
           'text': forms.Textarea(attrs={'rows':'6'}),
         }
