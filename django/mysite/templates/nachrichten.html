@@ -11,24 +11,9 @@
     // prepare the form when the DOM is ready
     $(document).ready(function() {
         // handler to "only my gremien" checkbox
-        $("#id_my_gremien").change(function() {
-            var onlyown = $(this).is(':checked') ? 1 : 0;
-            $.getJSON("{% url 'list_gremien' %}", { onlyown: onlyown },
-                function(gremien) {
-                    // Get DOM object for select box
-                    var select = document.getElementById('id_gremium');
-                    // Clear the old options
-                    select.length = 0;
-                    // Add new options
-                    for (g in gremien) {
-                        if (gremien.hasOwnProperty(g)) {
-                            select.options[select.options.length] =
-                                new Option(gremien[g], g);
-                        }
-                    }
+        $("#id_show_all").change(function() {
                     // Update messages list
                     update_messages();
-                });
         });
         // handler to the gremien choice field
         $("#id_gremium").change(function() {
@@ -57,8 +42,8 @@
             {{ form.gremium }}
         </div>
         <div id="mygremienfield">
-            <label for="id_my_gremien">{{ form.my_gremien.label }}:</label>
-            {{ form.my_gremien }}
+            <label for="id_show_all">{{ form.show_all.label }}:</label>
+            {{ form.show_all}}
         </div>
         <div id="vorhabenfield">
             <label for="id_vorhaben">{{ form.vorhaben.label }}:</label>

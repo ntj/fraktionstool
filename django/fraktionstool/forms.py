@@ -12,10 +12,10 @@ class GremiumSelectionForm(forms.Form):
     vorhaben = forms.ModelChoiceField(empty_label=None,
         widget=OptionClassesSelect(attrs={'size':'5'},
             get_option_class=highlight_messages,selected_index=0),
-		queryset=Vorhaben.objects.exclude(geschlossen=True).order_by('name'))
-	my_gremien = forms.BooleanField(
-		label='Nur meine Gremien',
-		required=False)
+        queryset=Vorhaben.objects.exclude(geschlossen=True).order_by('name'))
+    show_all = forms.BooleanField(
+            label='Alle Gremien anzeigen',
+            required=False)
 
 class AbstimmungsForm(forms.ModelForm):
     class Meta:

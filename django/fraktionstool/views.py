@@ -19,12 +19,23 @@ class NachrichtenList(ListView):
         context = super(NachrichtenList, self).get_context_data(**kwargs)
         # Provide initial form data
         initial_form_data = {}
-        for field in ['gremium', 'vorhaben', 'my_gremien']:
+        for field in ['gremium', 'vorhaben', 'show_all']:
             if field in self.kwargs:
                 initial_form_data[field] = self.kwargs[field]
+        if 'show_all' in initial_form_data:
+            show_all_value = bool(int(initial_form_data['show_all']))
+        else:
+            show_all_value = False
+        initial_form_data['show_all'] = show_all_value
         # Create extra context
+        print(initial_form_data)
         form = GremiumSelectionForm(initial=initial_form_data)
 
+        # Narrow list of gremien to those the user is member of
+        if not show_all_value:
+            gremium_field = form.fields['gremium']
+            gremium_field.queryset = gremium_field.queryset.filter(
+                    member=self.request.user)
         vorhaben_field = form.fields['vorhaben']
         if 'gremium' in self.kwargs:
             vorhaben_field.queryset = vorhaben_field.queryset.filter(
@@ -75,8 +86,13 @@ class NachrichtenList(ListView):
                 if form.is_valid():
                     gremium_id = form.cleaned_data['gremium'].id
                     vorhaben_id = form.cleaned_data['vorhaben'].id
+                    if form.cleaned_data['show_all']:
+                        show_all = 1
+                    else:
+                        show_all = 0
                     return HttpResponseRedirect(reverse('ftool-home-gremium',
-                         kwargs={'gremium': gremium_id, 'vorhaben': vorhaben_id}))
+                         kwargs={'gremium': gremium_id, 'show_all': show_all,
+                                     'vorhaben': vorhaben_id}))
             elif 'create_message' in request.POST:
                 message_form = MessageForm(request.POST)
                 gremium_form = GremiumSelectionForm(request.POST)

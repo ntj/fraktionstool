@@ -10,7 +10,7 @@ admin.autodiscover()
 urlpatterns = patterns('',
     # Examples:
     url(r'^$', login_required(NachrichtenList.as_view()), name='ftool-home'),
-    url(r'^nachrichten/gremium/(?P<gremium>\d+)/vorhaben/(?P<vorhaben>\d+)/$',
+    url(r'^nachrichten/gremium/(?P<gremium>\d+)/showall/(?P<show_all>[01])/vorhaben/(?P<vorhaben>\d+)/$',
         login_required(NachrichtenList.as_view()), name='ftool-home-gremium'),
     # url(r'^mysite/', include('mysite.foo.urls')),
 
@@ -27,7 +27,7 @@ urlpatterns += patterns('django.contrib.auth.views',
     url(r'^logout/$', 'logout', {'next_page': '/'}, name='mysite_logout'),
 )
 
-# Model retrieval
+# Model retrieval - former used by jquery
 urlpatterns += patterns('',
     url(r'^gremium/list$', login_required(list_gremien), name='list_gremien'),
     url(r'^vorhaben/list$', login_required(list_vorhaben), name='list_vorhaben'),
