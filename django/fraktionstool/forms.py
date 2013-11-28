@@ -29,3 +29,6 @@ class MessageForm(forms.ModelForm):
 	class Meta:
 		model = Nachricht
 		fields = ["text"]
+        widgets = {
+          'text': forms.Textarea(attrs={'rows':'6'}),
+        }
