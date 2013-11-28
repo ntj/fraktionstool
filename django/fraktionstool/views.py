@@ -28,7 +28,6 @@ class NachrichtenList(ListView):
             show_all_value = False
         initial_form_data['show_all'] = show_all_value
         # Create extra context
-        print(initial_form_data)
         form = GremiumSelectionForm(initial=initial_form_data)
 
         # Narrow list of gremien to those the user is member of
@@ -37,6 +36,7 @@ class NachrichtenList(ListView):
             gremium_field.queryset = gremium_field.queryset.filter(
                     member=self.request.user)
         vorhaben_field = form.fields['vorhaben']
+
         if 'gremium' in self.kwargs:
             vorhaben_field.queryset = vorhaben_field.queryset.filter(
                     gremien=self.kwargs['gremium'])
@@ -47,11 +47,15 @@ class NachrichtenList(ListView):
 
         if 'vorhaben' in self.kwargs:
             selected_vorhaben_id = self.kwargs['vorhaben']
+
+            #test if vorhaben exists within set of selected gremium, if not select first
+            #vorhaben of gremium
             if not vorhaben_field.queryset.filter(
                     id=selected_vorhaben_id).exists():
                 selected_vorhaben_id = vorhaben_field.queryset[:1].get().id
         else:
             selected_vorhaben_id = vorhaben_field.queryset[:1].get().id
+
         selected_vorhaben = vorhaben_field.queryset.filter(
                 id=selected_vorhaben_id).get()
 
@@ -86,6 +90,11 @@ class NachrichtenList(ListView):
                 if form.is_valid():
                     gremium_id = form.cleaned_data['gremium'].id
                     vorhaben_id = form.cleaned_data['vorhaben'].id
+                    elem = form.cleaned_data['gremium'] 
+                    mylist = form.cleaned_data['vorhaben'].gremien.all()
+                    if not elem in mylist:
+                        vorh_new = elem.vorhaben_set.all().exclude(geschlossen=True)[:1]
+                        vorhaben_id = vorh_new.get().id
                     if form.cleaned_data['show_all']:
                         show_all = 1
                     else:
@@ -93,6 +102,7 @@ class NachrichtenList(ListView):
                     return HttpResponseRedirect(reverse('ftool-home-gremium',
                          kwargs={'gremium': gremium_id, 'show_all': show_all,
                                      'vorhaben': vorhaben_id}))
+
             elif 'create_message' in request.POST:
                 message_form = MessageForm(request.POST)
                 gremium_form = GremiumSelectionForm(request.POST)
