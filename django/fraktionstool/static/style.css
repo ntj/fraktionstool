@@ -73,7 +73,7 @@ div#content {
 }
 
 div.contentblock {
-    width: 600px;
+    width: 650px;
     margin-left: auto;
     margin-right: auto;
     border: 1px dotted #CB4B16;
@@ -173,7 +173,7 @@ display:inline-block;
 
 div#createmessage input#submitbutton{
 float: right;
-margin-top: 147px;
+margin-top: 85px;
 margin-right: 15px;
 }
 
@@ -195,3 +195,10 @@ div#editabstimmung textarea{
 background-color: rgb(255, 252, 192);
 }
 
+select#id_gremium{
+width: 280px;
+}
+
+select#id_vorhaben{
+width: 280px;
+}
