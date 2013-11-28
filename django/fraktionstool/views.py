@@ -102,8 +102,13 @@ class NachrichtenList(ListView):
                     vorhaben_id = gremium_form.cleaned_data['vorhaben'].id
                     Nachricht.objects.create(text=text, gremium_id=gremium_id,
                             vorhaben_id=vorhaben_id, owner=request.user)
+                    if gremium_form.cleaned_data['show_all']:
+                        show_all = 1
+                    else:
+                        show_all = 0
                     return HttpResponseRedirect(reverse('ftool-home-gremium',
-                         kwargs={'gremium': gremium_id, 'vorhaben': vorhaben_id}))
+                         kwargs={'gremium': gremium_id, 'show_all': show_all,
+                                     'vorhaben': vorhaben_id}))
             elif 'change_abstimmung' in request.POST:
                 abstimmungs_form = AbstimmungsForm(request.POST)
                 gremium_form = GremiumSelectionForm(request.POST)
@@ -111,10 +116,16 @@ class NachrichtenList(ListView):
                     gremium_id = gremium_form.cleaned_data['gremium'].id
                     abstimmung = abstimmungs_form.cleaned_data['abstimmung']
                     vorhaben = gremium_form.cleaned_data['vorhaben']
+                    
+                    if gremium_form.cleaned_data['show_all']:
+                        show_all = 1
+                    else:
+                        show_all = 0
                     vorhaben.abstimmung = abstimmung
                     vorhaben.save()
-                return HttpResponseRedirect(reverse('ftool-home-gremium',
-                    kwargs={'gremium': gremium_id, 'vorhaben': vorhaben.id}))
+                    return HttpResponseRedirect(reverse('ftool-home-gremium',
+                         kwargs={'gremium': gremium_id, 'show_all': show_all,
+                                     'vorhaben': vorhaben.id}))
 
         return HttpResponseRedirect(reverse('ftool-home'))
 
