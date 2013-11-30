@@ -35,26 +35,22 @@ class NachrichtenList(ListView):
             gremium_field = form.fields['gremium']
             gremium_field.queryset = gremium_field.queryset.filter(
                     member=self.request.user)
+
         vorhaben_field = form.fields['vorhaben']
 
         if 'gremium' in self.kwargs:
             vorhaben_field.queryset = vorhaben_field.queryset.filter(
                     gremien=self.kwargs['gremium'])
         else:
-            first_gremium_id = form.fields['gremium'].queryset[:1].get().id
+            first_gremium_id = form.fields['gremium'].queryset.order_by('name')[:1].get().id
             vorhaben_field.queryset = vorhaben_field.queryset.filter(
                     gremien=first_gremium_id)
 
         if 'vorhaben' in self.kwargs:
             selected_vorhaben_id = self.kwargs['vorhaben']
 
-            #test if vorhaben exists within set of selected gremium, if not select first
-            #vorhaben of gremium
-            if not vorhaben_field.queryset.filter(
-                    id=selected_vorhaben_id).exists():
-                selected_vorhaben_id = vorhaben_field.queryset[:1].get().id
         else:
-            selected_vorhaben_id = vorhaben_field.queryset[:1].get().id
+            selected_vorhaben_id = vorhaben_field.queryset.order_by('name')[:1].get().id
 
         selected_vorhaben = vorhaben_field.queryset.filter(
                 id=selected_vorhaben_id).get()
@@ -88,20 +84,34 @@ class NachrichtenList(ListView):
             if 'update_messages' in request.POST:
                 form = GremiumSelectionForm(request.POST)
                 if form.is_valid():
-                    gremium_id = form.cleaned_data['gremium'].id
-                    vorhaben_id = form.cleaned_data['vorhaben'].id
-                    elem = form.cleaned_data['gremium'] 
-                    mylist = form.cleaned_data['vorhaben'].gremien.all()
-                    if not elem in mylist:
-                        vorh_new = elem.vorhaben_set.all().exclude(geschlossen=True)[:1]
-                        vorhaben_id = vorh_new.get().id
-                    if form.cleaned_data['show_all']:
-                        show_all = 1
-                    else:
+                    gremium = form.cleaned_data['gremium']
+                    vorhaben = form.cleaned_data['vorhaben']
+
+                    if not form.cleaned_data['show_all']:
                         show_all = 0
+                        gremium_field = form.fields['gremium']
+                        gremium_field.queryset = gremium_field.queryset.filter(
+                                member=self.request.user)
+
+                        #Test if selected gremium is within gremien the user is
+                        #member of
+                        if not gremium_field.queryset.filter(id = gremium.id).exists():
+                            #Select first gremium which user is member of
+                            print('Select first gremium which user is member of')
+                            gremium = gremium_field.queryset.order_by('name')[:1].get()
+                            #Update vorhaben to first of selected gremium
+                            vorhaben = form.fields['vorhaben'].queryset.filter(
+                                    gremien = gremium.id).order_by('name')[:1].get()
+                    else:
+                        show_all = 1
+
+                    gremien_to_vorhaben = vorhaben.gremien.all()
+                    if not gremium in gremien_to_vorhaben:
+                        vorhaben = gremium.vorhaben_set.all().exclude(
+                                geschlossen=True).order_by('name')[:1].get()
                     return HttpResponseRedirect(reverse('ftool-home-gremium',
-                         kwargs={'gremium': gremium_id, 'show_all': show_all,
-                                     'vorhaben': vorhaben_id}))
+                         kwargs={'gremium': gremium.id, 'show_all': show_all,
+                                     'vorhaben': vorhaben.id}))
 
             elif 'create_message' in request.POST:
                 message_form = MessageForm(request.POST)
