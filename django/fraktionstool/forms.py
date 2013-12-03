@@ -25,6 +25,10 @@ class AbstimmungsForm(forms.ModelForm):
           'abstimmung': forms.Textarea(attrs={'rows':'6'}),
         }
 
+    def __init__(self, *args, **kwargs):
+        super(AbstimmungsForm, self).__init__(*args, **kwargs)
+        self.fields['abstimmung'].label = "Vorgaben"
+
 class MessageForm(forms.ModelForm):
     class Meta:
         model = Nachricht
@@ -32,3 +36,7 @@ class MessageForm(forms.ModelForm):
         widgets = {
           'text': forms.Textarea(attrs={'rows':'6'}),
         }
+
+    def __init__(self, *args, **kwargs):
+        super(MessageForm, self).__init__(*args, **kwargs)
+        self.fields['text'].label = "Diskussion"
