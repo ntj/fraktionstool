@@ -55,13 +55,17 @@
     </div>
     <div style="clear:both;"></div>
     <div id="editabstimmung">
-       {{ abstimmungsform }}
-        <input id='changebutton' type="submit" name="change_abstimmung"
-            value="Speichern"/>
+        {% if abstimmungsform %}
+           {{ abstimmungsform }}
+            <input id='changebutton' type="submit" name="change_abstimmung"
+                value="Speichern"/>
+        {% endif %}
     </div>
     <div id="createmessage">
-        {{ nachrichtform }}
-        <input id='submitbutton' type="submit" name="create_message" value="Abschicken" />
+        {% if nachrichtform %}
+            {{ nachrichtform }}
+            <input id='submitbutton' type="submit" name="create_message" value="Abschicken" />
+        {% endif %}
     </div>
 </form>
 <div style="clear:both;"></div>
