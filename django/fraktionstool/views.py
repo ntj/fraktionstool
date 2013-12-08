@@ -146,8 +146,6 @@ class NachrichtenList(ListView):
                     return HttpResponseRedirect(reverse('ftool-home-gremium',
                          kwargs={'gremium': gremium_id, 'show_all': show_all,
                                      'vorhaben': vorhaben_id}))
-                else:
-                    print(form.errors)
 
             elif 'create_message' in request.POST:
                 message_form = MessageForm(request.POST)
