@@ -95,7 +95,6 @@ class NachrichtenList(ListView):
                 form = GremiumSelectionForm(request.POST)
                 if form.is_valid():
                     gremium = form.cleaned_data['gremium']
-                    gremium_id = gremium.id
                     vorhaben = form.cleaned_data['vorhaben']
                     if vorhaben:
                         vorhaben_id = vorhaben.id
@@ -115,14 +114,14 @@ class NachrichtenList(ListView):
 
                         if not gremium_field.queryset.filter(id = gremium.id).exists():
                             # Select first gremium which user is member of
-                            gremium_id = gremium_field.queryset.order_by(
-                                    'name')[0].id
+                            gremium = gremium_field.queryset.order_by(
+                                    'name')[0]
                     else:
                         show_all = 1
 
                     # Update vorhaben to first of selected gremium
                     tmp_qset = form.fields['vorhaben'].queryset.filter(
-                            gremien = gremium_id).order_by('name')
+                            gremien = gremium.id).order_by('name')
                     if bool(tmp_qset):
                         if not vorhaben in tmp_qset:
                             vorhaben = tmp_qset[0]
@@ -144,7 +143,7 @@ class NachrichtenList(ListView):
                         vorhaben_id = vorhaben.id
 
                     return HttpResponseRedirect(reverse('ftool-home-gremium',
-                         kwargs={'gremium': gremium_id, 'show_all': show_all,
+                         kwargs={'gremium': gremium.id, 'show_all': show_all,
                                      'vorhaben': vorhaben_id}))
 
             elif 'create_message' in request.POST:
