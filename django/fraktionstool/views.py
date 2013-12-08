@@ -79,7 +79,7 @@ class NachrichtenList(ListView):
             if v_qset:
                 vorhaben_id = v_qset[0]
                 nachrichten =  Nachricht.objects.all().filter(
-                    gremium=gremium_id,vorhaben=vorhaben_id)
+                    vorhaben=vorhaben_id)
             else:
                 return Nachricht.objects.none()
         return nachrichten.order_by('-id');
