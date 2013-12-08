@@ -49,7 +49,7 @@ class NachrichtenList(ListView):
         if 'vorhaben' in self.kwargs:
             selected_vorhaben_id = self.kwargs['vorhaben']
         else:
-            if(bool(vorhaben_field.queryset[0])):
+            if(bool(vorhaben_field.queryset)):
                 selected_vorhaben_id = vorhaben_field.queryset.order_by('name')[0].id
             else:
                 selected_vorhaben_id = -1
@@ -74,7 +74,14 @@ class NachrichtenList(ListView):
             vorhaben_id = int(self.kwargs['vorhaben'])
             nachrichten = Nachricht.objects.filter(vorhaben_id=vorhaben_id)
         else:
-            nachrichten = Nachricht.objects.all()
+            gremium_id = Gremium.objects.filter(member = self.request.user)[0].id
+            v_qset = Vorhaben.objects.filter(gremien= gremium_id)
+            if v_qset:
+                vorhaben_id = v_qset[0]
+                nachrichten =  Nachricht.objects.all().filter(
+                    gremium=gremium_id,vorhaben=vorhaben_id)
+            else:
+                return Nachricht.objects.none()
         return nachrichten.order_by('-id');
 
     def post(self, request, *args, **kwargs):
@@ -87,45 +94,60 @@ class NachrichtenList(ListView):
             if 'update_messages' in request.POST:
                 form = GremiumSelectionForm(request.POST)
                 if form.is_valid():
-                    vorhaben_id = 0
                     gremium = form.cleaned_data['gremium']
+                    gremium_id = gremium.id
                     vorhaben = form.cleaned_data['vorhaben']
+                    if vorhaben:
+                        vorhaben_id = vorhaben.id
+                    else:
+                        vorhaben_id = 0
 
+                    # test if only gremien the user is member of should be
+                    # displayed
                     if not form.cleaned_data['show_all']:
                         show_all = 0
                         gremium_field = form.fields['gremium']
+
+                        # Test if selected gremium is within gremien the user is
+                        # member of
                         gremium_field.queryset = gremium_field.queryset.filter(
                                 member=self.request.user)
 
-                        #Test if selected gremium is within gremien the user is
-                        #member of
                         if not gremium_field.queryset.filter(id = gremium.id).exists():
-                            #Select first gremium which user is member of
-                            gremium = gremium_field.queryset.order_by('name')[0]
-                            #Update vorhaben to first of selected gremium
-                            tmp_qset = form.fields['vorhaben'].queryset.filter(
-                                    gremien = gremium.id).order_by('name')
+                            # Select first gremium which user is member of
+                            gremium_id = gremium_field.queryset.order_by(
+                                    'name')[0].id
+                    else:
+                        show_all = 1
+
+                    # Update vorhaben to first of selected gremium
+                    tmp_qset = form.fields['vorhaben'].queryset.filter(
+                            gremien = gremium_id).order_by('name')
+                    if bool(tmp_qset):
+                        if not vorhaben in tmp_qset:
+                            vorhaben = tmp_qset[0]
+                    else:
+                        vorhaben_id = -1
+
+                    if vorhaben:
+                        gremien_to_vorhaben = vorhaben.gremien.all()
+                        if not gremium in gremien_to_vorhaben:
+                            tmp_qset = gremium.vorhaben_set.all().exclude(
+                                geschlossen=True).order_by('name')
                             if bool(tmp_qset):
                                 vorhaben = tmp_qset[0]
                             else:
                                 vorhaben_id = -1
                     else:
-                        show_all = 1
-
-                    gremien_to_vorhaben = vorhaben.gremien.all()
-                    if not gremium in gremien_to_vorhaben:
-                        tmp_qset = gremium.vorhaben_set.all().exclude(
-                            geschlossen=True).order_by('name')
-                        if bool(tmp_qset):
-                            vorhaben = tmp_qset[0]
-                        else:
-                            vorhaben_id = -1
+                        vorhaben_id = -1
                     if(vorhaben_id != -1):
                         vorhaben_id = vorhaben.id
 
                     return HttpResponseRedirect(reverse('ftool-home-gremium',
-                         kwargs={'gremium': gremium.id, 'show_all': show_all,
+                         kwargs={'gremium': gremium_id, 'show_all': show_all,
                                      'vorhaben': vorhaben_id}))
+                else:
+                    print(form.errors)
 
             elif 'create_message' in request.POST:
                 message_form = MessageForm(request.POST)
