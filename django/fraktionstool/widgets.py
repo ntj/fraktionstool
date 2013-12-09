@@ -1,3 +1,5 @@
+# -*- coding: utf8 -*-
+
 from django.forms.widgets import Select
 from django.utils.encoding import force_text
 from django.utils.html import format_html
@@ -28,7 +30,7 @@ class OptionClassesSelect(Select):
                 selected_choices.remove(option_value)
         else:
             selected_html = ''
-        return format_html('<option value="{0}"{1}{2}>{3}</option>',
+        return format_html(u'<option value="{0}"{1}{2}>{3}</option>',
                            option_value,
                            selected_html,
                            cls_html,
