@@ -54,9 +54,16 @@
         </div>
     </div>
     <div style="clear:both;"></div>
+    <div id="vorhabenname">
+        {% if abstimmungsform %}
+            <h3>{{ abstimmungsform.name.value }}</h3>
+        {% endif %}
+    </div>
     <div id="editabstimmung">
         {% if abstimmungsform %}
-           {{ abstimmungsform }}
+            <label for="id_abstimmung">{{ abstimmungsform.abstimmung.label}}:
+            </label>
+           {{ abstimmungsform.abstimmung }}
             <input id='changebutton' type="submit" name="change_abstimmung"
                 value="Speichern"/>
         {% endif %}
