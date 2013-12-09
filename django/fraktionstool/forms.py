@@ -20,7 +20,7 @@ class GremiumSelectionForm(forms.Form):
 class AbstimmungsForm(forms.ModelForm):
     class Meta:
         model = Vorhaben
-        fields = ["name", "abstimmung"]
+        fields = ["abstimmung"]
         widgets = {
           'abstimmung': forms.Textarea(attrs={'rows':'6'}),
         }

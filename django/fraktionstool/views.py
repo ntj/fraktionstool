@@ -57,6 +57,7 @@ class NachrichtenList(ListView):
         if int(selected_vorhaben_id) >= 0:
             selected_vorhaben = vorhaben_field.queryset.filter(
                 id=selected_vorhaben_id).get()
+            context['current_vorhaben'] = selected_vorhaben.name
             context['abstimmungsform'] = AbstimmungsForm(
                 instance=selected_vorhaben)
             context['nachrichtform'] = MessageForm()
@@ -179,7 +180,8 @@ class NachrichtenList(ListView):
                     return HttpResponseRedirect(reverse('ftool-home-gremium',
                          kwargs={'gremium': gremium_id, 'show_all': show_all,
                                      'vorhaben': vorhaben.id}))
-
+                else:
+                    print("A-Form: " + str(abstimmungs_form.errors))
         return HttpResponseRedirect(reverse('ftool-home'))
 
 def list_gremien(request):
