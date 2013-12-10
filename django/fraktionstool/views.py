@@ -5,6 +5,7 @@ from fraktionstool.models import Gremium, Vorhaben, Nachricht
 from django.http import HttpResponse, HttpResponseRedirect
 from django.core.urlresolvers import reverse
 from django.utils import simplejson as json
+from mysite import settings
 
 class NachrichtenList(ListView):
     """ Displays a list of Nachricht objects and allows a user to
@@ -143,7 +144,7 @@ class NachrichtenList(ListView):
                     if(vorhaben_id != -1):
                         vorhaben_id = vorhaben.id
 
-                    return HttpResponseRedirect(reverse('ftool-home-gremium',
+                    return HTTPS_Response(request,reverse('ftool-home-gremium',
                          kwargs={'gremium': gremium.id, 'show_all': show_all,
                                      'vorhaben': vorhaben_id}))
 
@@ -160,7 +161,7 @@ class NachrichtenList(ListView):
                         show_all = 1
                     else:
                         show_all = 0
-                    return HttpResponseRedirect(reverse('ftool-home-gremium',
+                    return HTTPS_Response(request,reverse('ftool-home-gremium',
                          kwargs={'gremium': gremium_id, 'show_all': show_all,
                                      'vorhaben': vorhaben_id}))
             elif 'change_abstimmung' in request.POST:
@@ -177,12 +178,18 @@ class NachrichtenList(ListView):
                         show_all = 0
                     vorhaben.abstimmung = abstimmung
                     vorhaben.save()
-                    return HttpResponseRedirect(reverse('ftool-home-gremium',
+                    return HTTPS_Response(request,reverse('ftool-home-gremium',
                          kwargs={'gremium': gremium_id, 'show_all': show_all,
                                      'vorhaben': vorhaben.id}))
-                else:
-                    print("A-Form: " + str(abstimmungs_form.errors))
         return HttpResponseRedirect(reverse('ftool-home'))
+
+def HTTPS_Response(request, URL):
+    if settings.SERVER_TYPE == "DEV":
+        new_URL = URL
+    else:
+        absolute_URL = request.build_absolute_uri(URL)
+        new_URL = "https%s" % absolute_URL[4:]
+    return HttpResponseRedirect(new_URL)
 
 def list_gremien(request):
     """ Return a JSON object with IDs and names of Gremium model objects.

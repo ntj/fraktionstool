@@ -125,3 +125,9 @@ LOGGING = {
 LOGIN_URL = '/login/'
 LOGOUT_URL = '/logout/'
 LOGIN_REDIRECT_URL = '/'
+
+# SSL related settings
+SESSION_COOKIE_HTTPONLY = True
+SESSION_COOKIE_SECURE = True
+CSRF_COOKIE_SECURE = True # currently only in Dev branch of Django.
+SESSION_EXPIRE_AT_BROWSER_CLOSE = True
