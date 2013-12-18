@@ -206,3 +206,11 @@ width: 380px;
 #id_text{
 margin-left: 5px;
 }
+
+.rightmenu{
+float: right;
+}
+
+.mpadd{
+padding-right: 20px;
+}
