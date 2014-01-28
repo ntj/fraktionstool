@@ -81,7 +81,8 @@ class NachrichtenList(ListView):
         else:
             if Gremium.objects.filter(member = self.request.user).exists():
                 gremium_id = Gremium.objects.filter(member = self.request.user)[0].id
-                v_qset = Vorhaben.objects.filter(gremien= gremium_id)
+                v_qset = Vorhaben.objects.filter(
+                        gremien=gremium_id).order_by('name')
                 if v_qset:
                     vorhaben_id = v_qset[0]
                     nachrichten =  Nachricht.objects.all().filter(
