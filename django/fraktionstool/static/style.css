@@ -136,6 +136,12 @@ div.message div.gremium {
     margin-bottom: 0.5em;
 }
 
+div.message div.date{
+    color: #777777;
+    font-size: small;
+    float: right;
+}
+
 .has_messages{
 background-color: rgb(199, 235, 187);
 }

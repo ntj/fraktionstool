@@ -76,6 +76,7 @@ class Nachricht(models.Model):
     owner = models.ForeignKey(User)
     vorhaben = models.ForeignKey(Vorhaben)
     gremium = models.ForeignKey(Gremium)
+    date = models.DateTimeField()
 
     def __unicode__(self):
         return self.text
