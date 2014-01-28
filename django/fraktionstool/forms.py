@@ -8,7 +8,7 @@ def highlight_messages(option_value):
 
 class GremiumSelectionForm(forms.Form):
     gremium = forms.ModelChoiceField(empty_label=None,
-        queryset=Gremium.objects.all().order_by('name'))
+        queryset=Gremium.objects.all().order_by('name'), required=False)
     vorhaben = forms.ModelChoiceField(required=False, empty_label=None,
         widget=OptionClassesSelect(attrs={'size':'5'},
             get_option_class=highlight_messages,selected_index=0),

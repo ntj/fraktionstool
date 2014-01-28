@@ -10,7 +10,7 @@ admin.autodiscover()
 urlpatterns = patterns('',
     # Examples:
     url(r'^$', login_required(NachrichtenList.as_view()), name='ftool-home'),
-    url(r'^nachrichten/gremium/(?P<gremium>\d+)/showall/(?P<show_all>[01])/vorhaben/(?P<vorhaben>-?\d+)/$',
+    url(r'^nachrichten/gremium/(?P<gremium>-?\d+)/showall/(?P<show_all>[01])/vorhaben/(?P<vorhaben>-?\d+)/$',
         login_required(NachrichtenList.as_view()), name='ftool-home-gremium'),
     # url(r'^mysite/', include('mysite.foo.urls')),
 
