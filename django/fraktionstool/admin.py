@@ -7,23 +7,24 @@ from fraktionstool.models import Vorhaben, Nachricht, GremiumVorhaben
 from fraktionstool.models import GremiumUser
 
 class GremienVorhabenInline(admin.TabularInline):
-	model = GremiumVorhaben
-	extra = 1
+    model = GremiumVorhaben
+    extra = 1
 
 class VorhabenAdmin(admin.ModelAdmin):
-	inlines = (GremienVorhabenInline,)
-	search_fields = ('name', 'nummer')
-	list_display = ('name', 'nummer', 'beobachten', 'geschlossen')
+    inlines = (GremienVorhabenInline,)
+    search_fields = ('name', 'nummer')
+    list_display = ('name', 'nummer', 'beobachten', 'geschlossen')
 
 class GremienUsersInline(admin.TabularInline):
-	model = GremiumUser
-	extra = 1
+    model = GremiumUser
+    extra = 1
 
 class GremiumAdmin(admin.ModelAdmin):
-	inlines = (GremienUsersInline,)
+    inlines = (GremienUsersInline,)
+    list_display = ('name',)
 
 class CustomUserAdmin(UserAdmin):
-	inlines = (GremienUsersInline,)
+    inlines = (GremienUsersInline,)
 
 admin.site.register(GremiumTyp)
 admin.site.register(Gremium, GremiumAdmin)
