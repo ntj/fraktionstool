@@ -6,6 +6,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.core.urlresolvers import reverse
 from django.utils import simplejson as json
 from mysite import settings
+import datetime
 
 class NachrichtenList(ListView):
     """ Displays a list of Nachricht objects and allows a user to
@@ -173,7 +174,8 @@ class NachrichtenList(ListView):
                     gremium_id = gremium_form.cleaned_data['gremium'].id
                     vorhaben_id = gremium_form.cleaned_data['vorhaben'].id
                     Nachricht.objects.create(text=text, gremium_id=gremium_id,
-                            vorhaben_id=vorhaben_id, owner=request.user)
+                            vorhaben_id=vorhaben_id, owner=request.user,
+                            date=datetime.datetime.now())
                     if gremium_form.cleaned_data['show_all']:
                         show_all = 1
                     else:
