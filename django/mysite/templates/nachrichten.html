@@ -59,13 +59,15 @@
             <h3>{{ current_vorhaben }}</h3>
         {% endif %}
     </div>
-    <div id = "vorgabe" class="vorgabeninfo">
+    <div id="vorgabefield" class="vorgabeninfo">
         <label> Vorgaben: </label>
-        {% if vorgabe == "" %}
-           Keine Hinweise durch Fraktion oder Fraktionsvorstand 
-        {% else %}
-            {{ vorgabe }}
-        {% endif %}
+        <div id = "vorgabe">
+            {% if vorgabe == "" %}
+               Keine Hinweise durch Fraktion oder Fraktionsvorstand
+            {% else %}
+                {{ vorgabe }}
+            {% endif %}
+        </div>
     </div>
     <div id="createmessage" class="vorgabeninfo">
         {% if nachrichtform %}
