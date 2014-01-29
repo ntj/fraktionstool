@@ -13,7 +13,7 @@ class GremienVorhabenInline(admin.TabularInline):
 class VorhabenAdmin(admin.ModelAdmin):
     inlines = (GremienVorhabenInline,)
     search_fields = ('name', 'nummer')
-    list_display = ('name', 'nummer', 'beobachten', 'geschlossen')
+    list_display = ('name', 'nummer', 'date', 'beobachten', 'geschlossen')
 
 class GremienUsersInline(admin.TabularInline):
     model = GremiumUser

@@ -51,6 +51,7 @@ class Vorhaben(models.Model):
     name = models.CharField(max_length=255)
     nummer = models.CharField(max_length=255)
     typ = models.ForeignKey(VorhabenTyp)
+    date = models.DateField(verbose_name = "Datum")
     beobachten = models.BooleanField()
     geschlossen = models.BooleanField()
     gremien = models.ManyToManyField(Gremium, through='GremiumVorhaben')
