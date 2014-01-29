@@ -55,7 +55,7 @@ class Vorhaben(models.Model):
     beobachten = models.BooleanField()
     geschlossen = models.BooleanField()
     gremien = models.ManyToManyField(Gremium, through='GremiumVorhaben')
-    abstimmung = models.TextField(blank=True)
+    abstimmung = models.TextField(blank=True, verbose_name="Vorgaben")
 
     def __unicode__(self):
         return self.name
