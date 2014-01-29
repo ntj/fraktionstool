@@ -126,17 +126,12 @@ div.message div.author {
     color: #777777;
     float: left;
     clear: left;
+    margin-bottom: 0.5em;
 }
 
 div.message div.gremium {
     color: #777777;
     float: right;
-    float: right;
-}
-
-div.message div.date{
-    color: #777777;
-    font-size: small;
     float: right;
     margin-bottom: 0.5em;
 }
