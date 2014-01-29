@@ -59,16 +59,15 @@
             <h3>{{ current_vorhaben }}</h3>
         {% endif %}
     </div>
-    <div id="editabstimmung">
-        {% if abstimmungsform %}
-            <label for="id_abstimmung">{{ abstimmungsform.abstimmung.label}}:
-            </label>
-           {{ abstimmungsform.abstimmung }}
-            <input id='changebutton' type="submit" name="change_abstimmung"
-                value="Speichern"/>
+    <div id = "vorgabe" class="vorgabeninfo">
+        <label> Vorgaben: </label>
+        {% if vorgabe == "" %}
+           Keine Hinweise durch Fraktion oder Fraktionsvorstand 
+        {% else %}
+            {{ vorgabe }}
         {% endif %}
     </div>
-    <div id="createmessage">
+    <div id="createmessage" class="vorgabeninfo">
         {% if nachrichtform %}
             {{ nachrichtform }}
             <input id='submitbutton' type="submit" name="create_message" value="Abschicken" />

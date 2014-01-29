@@ -1,6 +1,5 @@
 from django.views.generic import ListView
 from fraktionstool.forms import GremiumSelectionForm, MessageForm
-from fraktionstool.forms import AbstimmungsForm
 from fraktionstool.models import Gremium, Vorhaben, Nachricht
 from django.http import HttpResponse, HttpResponseRedirect
 from django.core.urlresolvers import reverse
@@ -63,8 +62,7 @@ class NachrichtenList(ListView):
             selected_vorhaben = vorhaben_field.queryset.filter(
                 id=selected_vorhaben_id).get()
             context['current_vorhaben'] = selected_vorhaben.name
-            context['abstimmungsform'] = AbstimmungsForm(
-                instance=selected_vorhaben)
+            context['vorgabe'] = selected_vorhaben.abstimmung
             context['nachrichtform'] = MessageForm()
 
         context['form'] = form

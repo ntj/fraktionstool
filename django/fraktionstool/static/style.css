@@ -163,11 +163,10 @@ div#createmessage{
 margin-top: 5px;
 }
 
-div#createmessage label{
+div.vorgabeninfo label{
 vertical-align: top;
 width:110px;
 margin-left: 5px;
-margin-top: 2px;
 display:inline-block;
 }
 
