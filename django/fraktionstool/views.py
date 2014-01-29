@@ -130,9 +130,12 @@ class NachrichtenList(ListView):
                             gremium = Gremium.objects.none()
                     else:
                         show_all = 1
-                        if self.kwargs['gremium'] == '-1': 
-                            gremium = form.fields['gremium'].queryset[0]
-                    
+                        if 'gremium' in self.kwargs:
+                            if self.kwargs['gremium'] == '-1':
+                                gremium = form.fields['gremium'].queryset[0]
+                        else:
+                            if not gremium:
+                                gremium = form.fields['gremium'].queryset[0]
                     # Update vorhaben to first of selected gremium
                     if gremium:
                         tmp_qset = form.fields['vorhaben'].queryset.filter(
