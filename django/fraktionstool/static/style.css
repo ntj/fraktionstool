@@ -168,30 +168,19 @@ vertical-align: top;
 width:110px;
 margin-left: 5px;
 display:inline-block;
+float: left;
+}
+
+div#vorgabe {
+width: 80%;
+float: left;
+margin-left: 4px;
+margin-bottom: 10px;
 }
 
 div#createmessage input#submitbutton{
-margin-top: 85px;
+margin-top: 80px;
 margin-left: 20px;
-}
-
-div#editabstimmung input#changebutton{
-margin-top: 82px;
-margin-left: 20px;
-}
-
-div#editabstimmung label{
-vertical-align: top;
-margin-left: 5px;
-margin-top: 2px;
-display:inline-block;
-width:110px;
-}
-
-div#editabstimmung textarea{
-background-color: rgb(255, 252, 192);
-padding-left: 0px;
-margin-left: 0px;
 }
 
 select#id_gremium{
