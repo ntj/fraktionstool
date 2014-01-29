@@ -34,86 +34,89 @@
 
 {% block content %}
 <div class="contentblock">
-<form action="" method="post" id="messageselectionform">
-    <div id="messageselection">
-        {% csrf_token %}
-        <div id="gremiumfield">
-            <label for="id_gremium">{{ form.gremium.label }}:</label>
-            {{ form.gremium }}
-        </div>
-        <div id="mygremienfield">
-            <label for="id_show_all">{{ form.show_all.label }}:</label>
-            {{ form.show_all}}
-        </div>
-        <div id="vorhabenfield">
-            <label for="id_vorhaben">{{ form.vorhaben.label }}:</label>
-            {{ form.vorhaben }}
-        </div>
-        <div id="selectmessages">
-            <input type="submit" name="update_messages" value="Aktualisieren" />
-        </div>
-    </div>
-    <div style="clear:both;"></div>
-    <div id="vorhabenname">
-        {% if current_vorhaben %}
-            <h3>{{ current_vorhaben }}</h3>
-        {% endif %}
-    </div>
-    <div id="vorgabefield" class="vorgabeninfo">
-        <label> Vorgaben: </label>
-        <div id = "vorgabe">
-            {% if vorgabe == "" %}
-               Keine Hinweise durch Fraktion oder Fraktionsvorstand
-            {% else %}
-                {{ vorgabe }}
+        <form action="" method="post" id="messageselectionform">
+            <div id="messageselectionleft">
+                <div id="vorhabenfield">
+                    <label for="id_vorhaben">{{ form.vorhaben.label }}:</label></br>
+                    {{ form.vorhaben }}
+                </div>
+            </div>
+            <div id="messageselectionright">
+                {% csrf_token %}
+                <div id="gremiumfield">
+                    <label for="id_gremium">{{ form.gremium.label }}:</label>
+                    {{ form.gremium }}
+                </div>
+                <div id="mygremienfield">
+                    <label for="id_show_all">{{ form.show_all.label }}:</label>
+                    {{ form.show_all}}
+                </div>
+                <div id="selectmessages">
+                    <input type="submit" name="update_messages" value="Aktualisieren" />
+                </div>
+            </div>
+            <div style="clear:both;"></div>
+            <div id="formrest">
+                <div id="vorhabenname">
+                    {% if current_vorhaben %}
+                        <h3>{{ current_vorhaben }}</h3>
+                    {% endif %}
+                </div>
+                <div id="vorgabefield" class="vorgabeninfo">
+                    {% if vorgabe %}
+                        <label> Vorgaben: </label>
+                        <div id = "vorgabe">
+                            {% if vorgabe == "" %}
+                               Keine Hinweise durch Fraktion oder Fraktionsvorstand
+                            {% else %}
+                                {{ vorgabe }}
+                            {% endif %}
+                        </div>
+                    {% endif %}
+                </div>
+                <div id="createmessage" class="vorgabeninfo">
+                    {% if nachrichtform %}
+                        {{ nachrichtform }}
+                        <input id='submitbutton' type="submit" name="create_message" value="Abschicken" />
+                    {% endif %}
+                </div>
+            </div>
+        </form>
+        <div style="clear:both;"></div>
+        <div id="messagesection">
+            <div id="messages">
+                {% if nachrichten %}
+                <div id="messagesheader">Nachrichten</div>
+                    {% for n in nachrichten %}
+                        <div class="message">
+                            <div class="author">{{ n.owner }}, {{ n.date }}</div>
+                            <div class="gremium">Gremium: {{ n.gremium.name }}</div>
+                            <div style="clear:both;"></div>
+                            <div class="messagetext">{{ n.text|linebreaksbr}}</div>
+                        </div>
+                    {% endfor %}
+                {% else %}
+                    <em>Es wurden keine Nachrichten gefunden.</em>
+                {% endif %}
+            </div>
+
+            {% if nachrichten %}
+                <div class="pagination">
+                    <span class="step-links">
+                        {% if page_obj.has_previous %}
+                            <a href="?page={{ page_obj.previous_page_number }}">zurück</a>
+                        {% endif %}
+
+                        <span class="current">
+                            Seite {{ page_obj.number }} von {{ paginator.num_pages }}
+                        </span>
+
+                        {% if page_obj.has_next %}
+                            <a href="?page={{ page_obj.next_page_number }}">vor</a>
+                        {% endif %}
+                    </span>
+                </div>
             {% endif %}
         </div>
-    </div>
-    <div id="createmessage" class="vorgabeninfo">
-        {% if nachrichtform %}
-            {{ nachrichtform }}
-            <input id='submitbutton' type="submit" name="create_message" value="Abschicken" />
-        {% endif %}
-    </div>
-</form>
-<div style="clear:both;"></div>
-<div id="abstimmung">
-{{ abstimmung}}
-</div>
-<div id="messagesection">
-<div id="messages">
-    {% if nachrichten %}
-        <div id="messagesheader">Nachrichten</div>
-        {% for n in nachrichten %}
-            <div class="message">
-                <div class="author">{{ n.owner }}, {{ n.date }}</div>
-                <div class="gremium">Gremium: {{ n.gremium.name }}</div>
-                <div style="clear:both;"></div>
-                <div class="messagetext">{{ n.text|linebreaksbr}}</div>
-            </div>
-        {% endfor %}
-{% else %}
-    <em>Es wurden keine Nachrichten gefunden.</em>
-{% endif %}
-</div>
-
-{% if nachrichten %}
-<div class="pagination">
-    <span class="step-links">
-        {% if page_obj.has_previous %}
-            <a href="?page={{ page_obj.previous_page_number }}">zurück</a>
-        {% endif %}
-
-        <span class="current">
-            Seite {{ page_obj.number }} von {{ paginator.num_pages }}
-        </span>
-
-        {% if page_obj.has_next %}
-            <a href="?page={{ page_obj.next_page_number }}">vor</a>
-        {% endif %}
-    </span>
-</div>
-{% endif %}
-</div>
 </div>
 {% endblock %}

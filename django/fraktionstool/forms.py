@@ -9,13 +9,19 @@ def highlight_messages(option_value):
 class GremiumSelectionForm(forms.Form):
     gremium = forms.ModelChoiceField(empty_label=None,
         queryset=Gremium.objects.all().order_by('name'), required=False)
+
     vorhaben = forms.ModelChoiceField(required=False, empty_label=None,
-        widget=OptionClassesSelect(attrs={'size':'5'},
+        widget=OptionClassesSelect(
             get_option_class=highlight_messages,selected_index=0),
         queryset=Vorhaben.objects.exclude(geschlossen=True).order_by('name'))
+
     show_all = forms.BooleanField(
             label='Alle Gremien anzeigen',
             required=False)
+
+    def mysize(self,nrSize):
+        print(nrSize)
+        self.fields['vorhaben'].widget.attrs['size'] = str(nrSize)
 
 class MessageForm(forms.ModelForm):
     class Meta:

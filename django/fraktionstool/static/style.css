@@ -72,8 +72,12 @@ div#content {
     padding: 3px;
 }
 
+div#vorhaben {
+float: left;
+}
+
 div.contentblock {
-    width: 650px;
+    width: 900px;
     margin-left: auto;
     margin-right: auto;
     border: 1px dotted #CB4B16;
@@ -82,30 +86,60 @@ div.contentblock {
     margin-top: 3em;
 }
 
-div#messageselection,
+div#messageselectionright,
 div.pagination {
     border: 1px dotted #CB4B16;
     background-color: #FDF6E3;
     padding: 6px;
     overflow: auto;
-    margin: 3px;
+}
+
+div#messageselectionright{
+    width: 64%;
+    float: right;
 }
 
 div.pagination {
     font-size: small;
     text-align: center;
+    margin: 3px;
+}
+
+div#messageselectionleft{
+    border: 1px dotted #CB4B16;
+    background-color: #FDF6E3;
+    width: 284px; 
+    float: left;
+    margin: 3px;
+    margin-top: 0px;
+    padding: 6px;
+    position: absolute;
+    min-height: 55px;
+}
+
+div#messagesection{
+width: 65%;
+float: right;
+}
+
+div#formrest{
+width: 65%;
+float: right;
 }
 
 div#gremiumfield,
 div#vorhabenfield {
-    float: left;
-    clear: left;
+    display: inline;
 }
 
-div#mygremienfield,
+div#mygremienfield{
+font-size: small;
+float: right;
+}
+
 div#selectmessages {
+    margin-top: 5px;
     float: right;
-    clear: rightr;
 }
 
 div#messagesheader {
@@ -145,18 +179,10 @@ width:100px;
 display:inline-block;
 }
 
-div#vorhabenfield{
-margin-top:5px;
-}
-
 div#vorhabenfield label{
 vertical-align: top;
 width:100px;
 display:inline-block;
-}
-
-div#selectmessages{
-margin-top:70px;
 }
 
 div#createmessage{
@@ -172,14 +198,14 @@ float: left;
 }
 
 div#vorgabe {
-width: 80%;
+width: 70%;
 float: left;
 margin-left: 4px;
 margin-bottom: 10px;
 }
 
 div#createmessage input#submitbutton{
-margin-top: 80px;
+margin-top: 10px;
 margin-left: 20px;
 }
 

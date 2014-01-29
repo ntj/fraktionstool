@@ -61,6 +61,7 @@ class NachrichtenList(ListView):
         if int(selected_vorhaben_id) >= 0:
             selected_vorhaben = vorhaben_field.queryset.filter(
                 id=selected_vorhaben_id).get()
+            form.mysize(nrSize=vorhaben_field.queryset.count())
             context['current_vorhaben'] = selected_vorhaben.name
             context['vorgabe'] = selected_vorhaben.abstimmung
             context['nachrichtform'] = MessageForm()
