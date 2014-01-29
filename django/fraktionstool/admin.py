@@ -14,7 +14,7 @@ class VorhabenAdmin(admin.ModelAdmin):
     inlines = (GremienVorhabenInline,)
     search_fields = ('name', 'nummer')
     list_display = ('name', 'nummer', 'date', 'beobachten', 'geschlossen')
-    ordering = ('-nummer',)
+    ordering = ('geschlossen', '-nummer',)
 
 class GremienUsersInline(admin.TabularInline):
     model = GremiumUser
