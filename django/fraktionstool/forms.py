@@ -6,11 +6,15 @@ def highlight_messages(option_value):
     has_messages = Nachricht.objects.filter(vorhaben=option_value).exists()
     return 'has_messages' if has_messages else 'has_no_messages'
 
+class VorhabenModelChoiceField(forms.ModelChoiceField):
+    def label_from_instance(self, obj):
+        return obj.nummer + " " + obj.name
+
 class GremiumSelectionForm(forms.Form):
     gremium = forms.ModelChoiceField(empty_label=None,
         queryset=Gremium.objects.all().order_by('name'), required=False)
 
-    vorhaben = forms.ModelChoiceField(required=False, empty_label=None,
+    vorhaben = VorhabenModelChoiceField(required=False, empty_label=None,
         widget=OptionClassesSelect(
             get_option_class=highlight_messages,selected_index=0),
         queryset=Vorhaben.objects.exclude(geschlossen=True).order_by('name'))
