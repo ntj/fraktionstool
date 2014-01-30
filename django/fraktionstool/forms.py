@@ -8,7 +8,7 @@ def highlight_messages(option_value):
 
 class VorhabenModelChoiceField(forms.ModelChoiceField):
     def label_from_instance(self, obj):
-        return obj.nummer + " " + obj.name
+        return obj.nummer + " - " + obj.name
 
 class GremiumSelectionForm(forms.Form):
     gremium = forms.ModelChoiceField(empty_label=None,
