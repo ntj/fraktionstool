@@ -20,8 +20,8 @@ class GremiumSelectionForm(forms.Form):
             required=False)
 
     def mysize(self,nrSize):
-        print(nrSize)
-        self.fields['vorhaben'].widget.attrs['size'] = str(nrSize)
+        resSize = min(nrSize, 30)
+        self.fields['vorhaben'].widget.attrs['size'] = str(resSize)
 
 class MessageForm(forms.ModelForm):
     class Meta:
