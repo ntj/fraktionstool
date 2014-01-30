@@ -48,7 +48,7 @@ class Vorhaben(models.Model):
     class Meta:
         verbose_name = "Vorhaben"
         verbose_name_plural = "Vorhaben"
-        ordering = ['nummer']
+        ordering = ['nummer','name']
 
     name = models.CharField(max_length=255)
     nummer = models.CharField(max_length=255)
