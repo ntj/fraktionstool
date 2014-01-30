@@ -36,26 +36,24 @@
 <div class="contentblock">
         <form action="" method="post" id="messageselectionform">
             <div id="messageselectionleft">
-                <div id="vorhabenfield">
-                    <label for="id_vorhaben">{{ form.vorhaben.label }}:</label></br>
-                    {{ form.vorhaben }}
-                </div>
-            </div>
-            <div id="messageselectionright">
                 {% csrf_token %}
                 <div id="gremiumfield">
                     <label for="id_gremium">{{ form.gremium.label }}:</label>
                     {{ form.gremium }}
                 </div>
                 <div id="mygremienfield">
-                    <label for="id_show_all">{{ form.show_all.label }}:</label>
                     {{ form.show_all}}
+                    <label for="id_show_all">{{ form.show_all.label }}:</label>
+                </div>
+                <div id="vorhabenfield">
+                    <label for="id_vorhaben">{{ form.vorhaben.label }}:</label></br>
+                    {{ form.vorhaben }}
                 </div>
                 <div id="selectmessages">
                     <input type="submit" name="update_messages" value="Aktualisieren" />
                 </div>
             </div>
-            <div style="clear:both;"></div>
+        <div style="clear:both;"></div>
             <div id="formrest">
                 <div id="vorhabenname">
                     {% if current_vorhaben %}

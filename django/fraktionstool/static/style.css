@@ -94,9 +94,9 @@ div.pagination {
     overflow: auto;
 }
 
-div#messageselectionright{
-    width: 64%;
-    float: right;
+div#messageselectiontop{
+    border: 1px dotted #CB4B16;
+    background-color: #FDF6E3;
 }
 
 div.pagination {
@@ -127,19 +127,22 @@ width: 65%;
 float: right;
 }
 
-div#gremiumfield,
 div#vorhabenfield {
-    display: inline;
+    margin-top: 50px;
+}
+
+div#vorhabenname h3{
+margin-top: 3px;
 }
 
 div#mygremienfield{
 font-size: small;
-float: right;
+float: left;
 }
 
 div#selectmessages {
-    margin-top: 5px;
     float: right;
+    margin-top: 20px;
 }
 
 div#messagesheader {
