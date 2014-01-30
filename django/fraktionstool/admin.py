@@ -28,11 +28,16 @@ class GremiumAdmin(admin.ModelAdmin):
 class CustomUserAdmin(UserAdmin):
     inlines = (GremienUsersInline,)
 
+class NachrichtAdmin(admin.ModelAdmin):
+    list_display = ('text', 'date')
+    ordering = ('-id',)
+    search_fields = ('text', 'date')
+
 admin.site.register(GremiumTyp)
 admin.site.register(Gremium, GremiumAdmin)
 admin.site.register(VorhabenTyp)
 admin.site.register(Vorhaben, VorhabenAdmin)
-admin.site.register(Nachricht)
+admin.site.register(Nachricht, NachrichtAdmin)
 
 # Replace UserAdmin view with custom view
 admin.site.unregister(User)
