@@ -17,6 +17,7 @@ class Gremium(models.Model):
     class Meta:
         verbose_name = "Gremium"
         verbose_name_plural = "Gremien"
+        ordering = ['name']
 
     name = models.CharField(max_length=255)
     typ = models.ForeignKey(GremiumTyp)
@@ -47,6 +48,7 @@ class Vorhaben(models.Model):
     class Meta:
         verbose_name = "Vorhaben"
         verbose_name_plural = "Vorhaben"
+        ordering = ['nummer']
 
     name = models.CharField(max_length=255)
     nummer = models.CharField(max_length=255)

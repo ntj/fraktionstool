@@ -44,7 +44,7 @@ class NachrichtenList(ListView):
                     gremien=self.kwargs['gremium'])
         else:
             if form.fields['gremium'].queryset.exists():
-                first_gremium_id = form.fields['gremium'].queryset.order_by('name')[0].id
+                first_gremium_id = form.fields['gremium'].queryset[0].id
                 vorhaben_field.queryset = vorhaben_field.queryset.filter(
                         gremien=first_gremium_id)
             else:
@@ -54,7 +54,7 @@ class NachrichtenList(ListView):
             selected_vorhaben_id = self.kwargs['vorhaben']
         else:
             if(bool(vorhaben_field.queryset)):
-                selected_vorhaben_id = vorhaben_field.queryset.order_by('name')[0].id
+                selected_vorhaben_id = vorhaben_field.queryset[0].id
             else:
                 selected_vorhaben_id = -1
 
@@ -81,8 +81,7 @@ class NachrichtenList(ListView):
         else:
             if Gremium.objects.filter(member = self.request.user).exists():
                 gremium_id = Gremium.objects.filter(member = self.request.user)[0].id
-                v_qset = Vorhaben.objects.filter(
-                        gremien=gremium_id).order_by('name')
+                v_qset = Vorhaben.objects.filter(gremien=gremium_id)
                 if v_qset:
                     vorhaben_id = v_qset[0]
                     nachrichten =  Nachricht.objects.all().filter(
@@ -123,8 +122,7 @@ class NachrichtenList(ListView):
                         if gremium_field.queryset.exists():
                             if not gremium_field.queryset.filter(id = gremium.id).exists():
                                 # Select first gremium which user is member of
-                                gremium = gremium_field.queryset.order_by(
-                                        'name')[0]
+                                gremium = gremium_field.queryset[0]
                         else:
                             gremium = Gremium.objects.none()
                     else:
@@ -138,7 +136,7 @@ class NachrichtenList(ListView):
                     # Update vorhaben to first of selected gremium
                     if gremium:
                         tmp_qset = form.fields['vorhaben'].queryset.filter(
-                                gremien = gremium.id).order_by('name')
+                                gremien = gremium.id)
                         if bool(tmp_qset):
                             if not vorhaben in tmp_qset:
                                 vorhaben = tmp_qset[0]
@@ -149,7 +147,7 @@ class NachrichtenList(ListView):
                             gremien_to_vorhaben = vorhaben.gremien.all()
                             if not gremium in gremien_to_vorhaben:
                                 tmp_qset = gremium.vorhaben_set.all().exclude(
-                                    geschlossen=True).order_by('name')
+                                    geschlossen=True)
                                 if bool(tmp_qset):
                                     vorhaben = tmp_qset[0]
                                 else:

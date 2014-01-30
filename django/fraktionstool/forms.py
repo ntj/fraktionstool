@@ -12,12 +12,12 @@ class VorhabenModelChoiceField(forms.ModelChoiceField):
 
 class GremiumSelectionForm(forms.Form):
     gremium = forms.ModelChoiceField(empty_label=None,
-        queryset=Gremium.objects.all().order_by('name'), required=False)
+        queryset=Gremium.objects.all(), required=False)
 
     vorhaben = VorhabenModelChoiceField(required=False, empty_label=None,
         widget=OptionClassesSelect(
             get_option_class=highlight_messages,selected_index=0),
-        queryset=Vorhaben.objects.exclude(geschlossen=True).order_by('name'))
+        queryset=Vorhaben.objects.exclude(geschlossen=True))
 
     show_all = forms.BooleanField(
             label='Alle Gremien anzeigen',
