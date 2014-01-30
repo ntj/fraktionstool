@@ -85,7 +85,7 @@
                 <div id="messagesheader">Nachrichten</div>
                     {% for n in nachrichten %}
                         <div class="message">
-                            <div class="author">{{ n.owner }}, {{ n.date }}</div>
+                            <div class="author">{{ n.owner }}, {{ n.date|date:"D d M Y H:i" }}</div>
                             <div class="gremium">Gremium: {{ n.gremium.name }}</div>
                             <div style="clear:both;"></div>
                             <div class="messagetext">{{ n.text|linebreaksbr}}</div>
