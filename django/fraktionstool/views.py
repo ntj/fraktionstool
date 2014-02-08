@@ -208,12 +208,11 @@ def create_redirect_response(request, URL):
     makes sure the https protocol is used. Otherwise, a standard redirect
     is returned.
     """
-    if settings.SERVER_TYPE == "DEV":
-        new_URL = URL
-    else:
+    if request.is_secure():
         absolute_URL = request.build_absolute_uri(URL)
-        new_URL = "https%s" % absolute_URL[4:]
-    return HttpResponseRedirect(new_URL)
+        return "https%s" % absolute_URL[4:]
+    else:
+        return HttpResponseRedirect(URL)
 
 def list_gremien(request):
     """ Return a JSON object with IDs and names of Gremium model objects.
