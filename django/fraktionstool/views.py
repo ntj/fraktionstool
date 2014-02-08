@@ -162,7 +162,7 @@ class NachrichtenList(ListView):
                     if(vorhaben_id != -1):
                         vorhaben_id = vorhaben.id
 
-                    return HTTPS_Response(request,reverse('ftool-home-gremium',
+                    return create_redirect_response(request,reverse('ftool-home-gremium',
                          kwargs={'gremium': gremium_id, 'show_all': show_all,
                                      'vorhaben': vorhaben_id}))
 
@@ -180,7 +180,7 @@ class NachrichtenList(ListView):
                         show_all = 1
                     else:
                         show_all = 0
-                    return HTTPS_Response(request,reverse('ftool-home-gremium',
+                    return create_redirect_response(request,reverse('ftool-home-gremium',
                          kwargs={'gremium': gremium_id, 'show_all': show_all,
                                      'vorhaben': vorhaben_id}))
             elif 'change_abstimmung' in request.POST:
@@ -197,12 +197,17 @@ class NachrichtenList(ListView):
                         show_all = 0
                     vorhaben.abstimmung = abstimmung
                     vorhaben.save()
-                    return HTTPS_Response(request,reverse('ftool-home-gremium',
+                    return create_redirect_response(request,reverse('ftool-home-gremium',
                          kwargs={'gremium': gremium_id, 'show_all': show_all,
                                      'vorhaben': vorhaben.id}))
         return HttpResponseRedirect(reverse('ftool-home'))
 
-def HTTPS_Response(request, URL):
+def create_redirect_response(request, URL):
+    """
+    In case of a secure connection, this function creates a redirect that
+    makes sure the https protocol is used. Otherwise, a standard redirect
+    is returned.
+    """
     if settings.SERVER_TYPE == "DEV":
         new_URL = URL
     else:
