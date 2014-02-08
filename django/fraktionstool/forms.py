@@ -38,3 +38,4 @@ class MessageForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(MessageForm, self).__init__(*args, **kwargs)
         self.fields['text'].label = "Diskussion"
+        self.fields['text'].widget.attrs.update({'autofocus': 'autofocus'})
