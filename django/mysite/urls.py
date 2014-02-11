@@ -26,6 +26,11 @@ urlpatterns += patterns('django.contrib.auth.views',
     url(r'^login/$', 'login', {'template_name': 'login.html'},
         name='mysite_login'),
     url(r'^logout/$', 'logout', {'next_page': '/'}, name='mysite_logout'),
+    url(r'^accounts/password_change/$', 'password_change',
+            {'template_name': 'password_change.html'}, name='change_password'),
+    url(r'^accounts/password_change/done/$', 'password_change_done',
+            {'template_name': 'password_change_done.html'},
+            name='change_password_done'),
 )
 
 # Model retrieval - former used by jquery
