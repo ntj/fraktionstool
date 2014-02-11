@@ -9,7 +9,7 @@
 {% endblock %}
 
 {% block content %}
-<div id="loginbox">
+<div id="loginbox" class="formbox">
     <form action="{% url "mysite_login" %}" method="post" accept-charset="utf-8">
         {{ form.as_p }}
         {% csrf_token %}

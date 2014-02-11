@@ -7,8 +7,7 @@ h1
 	color: #ed1c24;
 }
 
-div#loginbox {
-    width: 320px;
+div.formbox{
     margin-left: auto;
     margin-right: auto;
     border: 1px dotted #CB4B16;
@@ -16,6 +15,23 @@ div#loginbox {
     padding: 10px;
     overflow: auto;
     margin-top: 3em;
+}
+
+div.formheading{
+    padding: 10px 0px 0px 10px;
+    margin-left:auto;
+    margin-right: auto;
+    overflow: auto;
+    width: 420px;
+}
+
+div#loginbox{
+    width: 320px;
+}
+
+div#change_password{
+    width: 420px;
+    margin-top: 0px;
 }
 
 div#loginbox ul.errorlist {
@@ -61,7 +77,12 @@ div#header a:visited {
     clear: right;
 }
 
-div#header_page_name {
+div#header_page_name a:link{
+	color: #ed1c24;
+    font-weight: bold;
+}
+
+div#header_page_name a:visited{
 	color: #ed1c24;
     font-weight: bold;
 }
@@ -225,4 +246,8 @@ float: right;
 
 .mpadd{
 padding-right: 20px;
+}
+
+div#change_password input{
+float: right;
 }
