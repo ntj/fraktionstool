@@ -210,7 +210,7 @@ def create_redirect_response(request, URL):
     """
     if request.is_secure():
         absolute_URL = request.build_absolute_uri(URL)
-        return "https%s" % absolute_URL[4:]
+        return HttpResponseRedirect(absolute_URL)
     else:
         return HttpResponseRedirect(URL)
 
