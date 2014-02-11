@@ -14,7 +14,7 @@
         {% if user.is_authenticated %}
             <div class="rightmenu"><a href="/logout">Abmelden</a></div>
             <div class="rightmenu mpadd"><a href="/static/hilfe.html">Hilfe</a></div>
-            <div class="rightmenu mpadd"><a href="/admin/">Passwort ändern</a></div>
+            <div class="rightmenu mpadd"><a href="/accounts/password_change/">Passwort ändern</a></div>
             <div class="rightmenu mpadd">Hallo {{ user.username }}</div>
         {% endif %}
     </div>
