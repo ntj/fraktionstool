@@ -8,12 +8,12 @@
 
 <body>
     <div id="header">
-        <div class="raggedleft">
-            {% block extra_page_header %}{% endblock %}
-        </div>
         {% if user.is_authenticated %}
+             <div class="raggedleft">
+                <div id="header_page_name"><a href="/">Nachrichtenübersicht</a></div>
+            </div>
             <div class="rightmenu"><a href="/logout">Abmelden</a></div>
-            <div class="rightmenu mpadd"><a href="/static/hilfe.html">Hilfe</a></div>
+            <div class="rightmenu mpadd"><a href="/hilfe/">Hilfe</a></div>
             <div class="rightmenu mpadd"><a href="/accounts/password_change/">Passwort ändern</a></div>
             <div class="rightmenu mpadd">Hallo {{ user.username }}</div>
         {% endif %}
