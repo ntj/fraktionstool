@@ -5,6 +5,7 @@ from django.contrib.auth.models import User
 from fraktionstool.models import GremiumTyp, Gremium, VorhabenTyp
 from fraktionstool.models import Vorhaben, Nachricht, GremiumVorhaben
 from fraktionstool.models import GremiumUser
+from fraktionstool.models import Hilfe
 
 class GremienVorhabenInline(admin.TabularInline):
     model = GremiumVorhaben
@@ -33,11 +34,18 @@ class NachrichtAdmin(admin.ModelAdmin):
     ordering = ('-id',)
     search_fields = ('text', 'date')
 
+class HilfeAdmin(admin.ModelAdmin):
+    def has_add_permission(self, request):
+        num_objects = self.model.objects.count()
+        return num_objects < 1
+
+
 admin.site.register(GremiumTyp)
 admin.site.register(Gremium, GremiumAdmin)
 admin.site.register(VorhabenTyp)
 admin.site.register(Vorhaben, VorhabenAdmin)
 admin.site.register(Nachricht, NachrichtAdmin)
+admin.site.register(Hilfe,HilfeAdmin)
 
 # Replace UserAdmin view with custom view
 admin.site.unregister(User)

@@ -87,7 +87,7 @@ class Nachricht(models.Model):
 class Hilfe(models.Model):
     class Meta:
         verbose_name = "Hilfetext"
-        verbose_name_plural = "Hilfetexte"
+        verbose_name_plural = "Hilfetext"
 
     text = models.TextField()
 
