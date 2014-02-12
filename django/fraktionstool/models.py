@@ -84,3 +84,12 @@ class Nachricht(models.Model):
     def __unicode__(self):
         return self.text
 
+class Hilfe(models.Model):
+    class Meta:
+        verbose_name = "Hilfetext"
+        verbose_name_plural = "Hilfetexte"
+
+    text = models.TextField()
+
+    def __unicode__(self):
+        return self.text
