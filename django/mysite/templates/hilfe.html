@@ -3,34 +3,9 @@
 {% block content %}
 <div class="contentblock" align=justify>
     <h1>Hilfe zum Fraktionstool</h1>
-    <p>Im Fraktionstool können zu einem Vorhaben aus einem Gremium heraus
-    Nachrichten verfasst und die bisherigen Nachrichten zu diesem Vorhaben eingesehen werden.
-
-    Hierfür wird in der Auswahl <em>Gremium</em> das Gremium ausgewählt, zu dem das
-    Vorhaben zugeordnet ist. Anschließend wählt man in der Auswahl
-    <em>Vorhaben</em> das
-    Vorhaben aus, an dem man interessiert ist. Nun werden in der Übersicht
-    <em>Nachrichten</em> die bisherigen Nachrichten zu diesem Vorhaben aufgelistet, samt
-    der Information, von wem die Nachricht geschrieben wurde und aus welchem Gremium
-    sie entstammt.</p>
-
-    <p>
-    Standardmäßig werden nur die Gremien angezeigt, in denen der angemeldete Nutzer
-    selbst Mitglied ist. Durch einen Klick auf <em>Alle Gremien anzeigen</em> werden alle
-    Gremien sichtbar, die im Fraktionstool hinterlegt sind.</p>
-
-    <p>
-    In der Liste <em>Vorhaben</em> sind die Vorhaben grün unterlegt, welche Nachrichten
-    enthalten.</p>
-
-    <h3>Vorgaben</h3>
-    Das Feld <em>Vorgaben</em> existiert für jedes Vorhaben und kann Informationen aus der
-    Stadtgeschäftstelle zu diesem enthalten.
-
-    <h3>Neue Nachricht schreiben</h3>
-    Möchte man eine neue Nachricht zu einem Vorhaben erstellen, so schreibt man
-    den Nachrichtentext in das Feld <em>Diskussion</em> und klickt auf
-    <em>Abschicken</em>. Der Text samt Nutzername und ausgewähltes Gremium taucht dann als neue Nachricht
-    oben in der Liste im Bereich Diskussion auf.
+        {% for hilfe in object_list %}
+            <h3> {{ hilfe.heading }} </h3>
+            {{ hilfe.text|linebreaksbr }}
+        {% endfor %}
 </div>
 {% endblock %}

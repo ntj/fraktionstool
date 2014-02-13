@@ -35,10 +35,7 @@ class NachrichtAdmin(admin.ModelAdmin):
     search_fields = ('text', 'date')
 
 class HilfeAdmin(admin.ModelAdmin):
-    def has_add_permission(self, request):
-        num_objects = self.model.objects.count()
-        return num_objects < 1
-
+    list_display = ('nummer', 'heading', 'text')
 
 admin.site.register(GremiumTyp)
 admin.site.register(Gremium, GremiumAdmin)

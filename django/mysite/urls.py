@@ -2,7 +2,7 @@ from django.conf.urls import patterns, include, url
 from django.contrib.auth.decorators import login_required
 from django.views.generic import TemplateView
 
-from fraktionstool.views import NachrichtenList
+from fraktionstool.views import NachrichtenList, HilfeList
 from fraktionstool.views import list_gremien, list_vorhaben, list_nachrichten
 
 from django.contrib import admin
@@ -20,7 +20,7 @@ urlpatterns = patterns('',
 
     # Uncomment the next line to enable the admin:
     url(r'^admin/', include(admin.site.urls)),
-    url(r'^hilfe/', TemplateView.as_view(template_name='hilfe.html'))
+    url(r'^hilfe/', HilfeList.as_view(template_name='hilfe.html'))
 )
 
 urlpatterns += patterns('django.contrib.auth.views',

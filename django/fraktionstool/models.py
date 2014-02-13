@@ -88,8 +88,11 @@ class Hilfe(models.Model):
     class Meta:
         verbose_name = "Hilfetext"
         verbose_name_plural = "Hilfetext"
+        ordering = ['nummer']
 
+    nummer = models.IntegerField()
+    heading = models.CharField(max_length=255)
     text = models.TextField()
 
     def __unicode__(self):
-        return self.text
+        return self.heading

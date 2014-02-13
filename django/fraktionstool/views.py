@@ -1,6 +1,8 @@
 from django.views.generic import ListView
 from fraktionstool.forms import GremiumSelectionForm, MessageForm
 from fraktionstool.models import Gremium, Vorhaben, Nachricht
+from fraktionstool.models import Hilfe
+
 from django.http import HttpResponse, HttpResponseRedirect
 from django.core.urlresolvers import reverse
 from django.utils import simplejson as json
@@ -201,6 +203,9 @@ class NachrichtenList(ListView):
                          kwargs={'gremium': gremium_id, 'show_all': show_all,
                                      'vorhaben': vorhaben.id}))
         return HttpResponseRedirect(reverse('ftool-home'))
+
+class HilfeList(ListView):
+    model = Hilfe
 
 def create_redirect_response(request, URL):
     """
