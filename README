@@ -4,6 +4,8 @@ Fraktionstool
 Entwicklungsumgebung
 --------------------
 
+Das Fraktionstool verwendet Python 2.7.6
+
 Es wird empfohlen eine virtualenv-Umgebung zu benutzen. Diese wird
 erstellt mit:
 
@@ -12,6 +14,11 @@ erstellt mit:
 Anschließend muss die Umgebung aktiviert werden:
 
   workon fraktionstool
+
+Jetzt müssen die Abhängigkeiten installiert werden. Hierfür führt man folgenden
+Befehl aus:
+
+  pip install -r pip-frozen
 
 Außerdem muss eine Konfigurationsdatei angelegt werden: Im Verzeichnis
 `django/mysite` muss die Datei `settings.py.example` in `settings.py`
@@ -29,3 +36,15 @@ Benutzer `postgres` ausgeführt wird, gezeigt werden:
 Dies erzeugt den Datenbanknutzer `fraktionstool_user` mit dem Passwort
 `fraktionstool_pass` und setzt diesen als Besitzer der neuen Datenbank
 `fraktionstool`.
+
+Nun synchronisiert man die Datenbank mit folgendem Befehl:
+
+  ./manage.py syncdb
+
+Hier muss ein Superuser angelegt werden. Er fungiert dann als Admin in der
+Django-Anwendung.
+
+Schließlich werden die Migrationen der Datenbank ausgeführt. Dies geschieht
+durch folgenden Befehl:
+
+  ./manage.py migrate fraktionstool
