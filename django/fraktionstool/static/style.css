@@ -67,6 +67,10 @@ div#header a:visited {
     text-decoration: none;
 }
 
+div#header a:hover {
+    color: #000000;
+}
+
 .raggedleft {
     float: left;
     clear: left;
@@ -85,6 +89,10 @@ div#header_page_name a:link{
 div#header_page_name a:visited{
 	color: #ed1c24;
     font-weight: bold;
+}
+
+div#header_page_name a:hover{
+    color: #A00;
 }
 
 div#content {
