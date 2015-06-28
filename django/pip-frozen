@@ -1,6 +1,8 @@
-Django==1.5.12
-South==0.7.6
-psycopg2==2.5
+Django==1.6.11
+South==1.0.2
+psycopg2==2.6
 wsgiref==0.1.2
-pyyaml==3.10
+pyyaml==3.11
 django-jquery==1.9.1
+
+

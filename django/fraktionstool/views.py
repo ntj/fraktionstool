@@ -5,7 +5,7 @@ from fraktionstool.models import Hilfe
 
 from django.http import HttpResponse, HttpResponseRedirect
 from django.core.urlresolvers import reverse
-from django.utils import simplejson as json
+import json
 from mysite import settings
 import datetime
 
